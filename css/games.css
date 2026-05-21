@@ -1,0 +1,929 @@
+/* ============================================
+   HAWDAJ GAME — Game-Specific Styles
+   ============================================ */
+
+/* --- Quiz Game --- */
+#quiz-game {
+    background: transparent;
+    padding: var(--sp-md);
+    padding-top: var(--sp-2xl);
+    justify-content: flex-start;
+    gap: var(--sp-md);
+}
+
+.quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 450px;
+    animation: fadeInDown 0.4s ease both;
+}
+
+.quiz-progress {
+    flex: 1;
+    margin: 0 var(--sp-md);
+}
+
+.quiz-progress-text {
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.quiz-question-area {
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    animation: fadeInUp 0.4s ease 0.1s both;
+}
+
+.quiz-question-card {
+    padding: var(--sp-xl);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--card-border);
+    margin-bottom: var(--sp-lg);
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-md);
+}
+
+body.ramadan .quiz-question-card {
+    background: var(--card-bg);
+    box-shadow: var(--shadow-lg);
+}
+
+body.normal .quiz-question-card {
+    background: var(--card-bg);
+    box-shadow: var(--shadow-md);
+}
+
+.quiz-question-text {
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.quiz-question-img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+}
+
+.quiz-streak {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding: 4px 14px;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+body.ramadan .quiz-streak {
+    background: rgba(255, 165, 0, 0.2);
+    color: #FFA500;
+}
+
+body.normal .quiz-streak {
+    background: rgba(0, 108, 53, 0.1);
+    color: #006C35;
+}
+
+/* Answer Options */
+.quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-md);
+    width: 100%;
+    max-width: 450px;
+}
+
+.quiz-option {
+    padding: var(--sp-md) var(--sp-lg);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-md);
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px solid var(--card-border);
+    animation: slideUp 0.3s ease both;
+}
+
+.quiz-option:nth-child(1) {
+    animation-delay: 0.15s;
+}
+
+.quiz-option:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.quiz-option:nth-child(3) {
+    animation-delay: 0.25s;
+}
+
+.quiz-option:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+body.ramadan .quiz-option {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+}
+
+body.normal .quiz-option {
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--text-primary);
+}
+
+.quiz-option:active {
+    transform: scale(0.95);
+}
+
+.quiz-option.correct {
+    background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
+    color: white !important;
+    border-color: #27ae60 !important;
+    animation: correctPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    box-shadow: 0 10px 40px rgba(46, 204, 113, 0.8) !important;
+    z-index: 20;
+}
+
+@keyframes correctPop {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    40% {
+        transform: scale(1.15);
+        filter: brightness(1.3);
+    }
+
+    100% {
+        transform: scale(1.05);
+        filter: brightness(1.1);
+    }
+}
+
+.quiz-option.wrong {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    color: white !important;
+    border-color: #c0392b !important;
+    animation: shake 0.5s ease;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+}
+
+.quiz-option.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.quiz-option.highlight-correct {
+    border-color: #2ecc71 !important;
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+}
+
+/* Quiz Lifelines - Hidden now because we use the unified Inventory Bar */
+.quiz-lifelines {
+    display: none !important;
+}
+
+.lifeline-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+body.ramadan .lifeline-btn {
+    background: rgba(255, 215, 0, 0.15);
+    color: #FFD700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+body.normal .lifeline-btn {
+    background: rgba(0, 108, 53, 0.1);
+    color: #006C35;
+    border: 1px solid rgba(0, 108, 53, 0.2);
+}
+
+.lifeline-btn.used {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.lifeline-btn .lifeline-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+/* Game Characters */
+.game-characters {
+    position: fixed;
+    bottom: -10vh;
+    /* bring them down so lower body is cut off */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.game-char-img {
+    height: clamp(250px, 60vh, 600px);
+    /* increase scale drastically */
+    width: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: bottom center;
+    object-fit: contain;
+}
+
+.game-char-img.azzam {
+    transform: translateX(-15%) rotate(5deg) scale(0.85);
+    /* Azzam is slightly smaller than Jadel */
+}
+
+.game-char-img.jadel {
+    transform: translateX(15%) rotate(-5deg);
+    /* Slight rotation to look inward */
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    .game-characters {
+        bottom: -15vh;
+        /* Push more of the body off screen for half-body effect */
+    }
+
+    .game-char-img {
+        height: clamp(200px, 55vh, 500px);
+    }
+}
+
+.game-char-img.celebrate {
+    animation: bounce 0.6s ease infinite;
+    filter: drop-shadow(0 15px 35px rgba(255, 215, 0, 0.6));
+    transform: scale(1.15) translateY(-20px);
+}
+
+.game-char-img.sad {
+    animation: shake 0.5s ease;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6)) grayscale(0.6);
+    transform: scale(0.9) translateY(10px);
+}
+
+/* Score Popup */
+.score-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--z-overlay);
+    font-size: var(--fs-2xl);
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    animation: scorePopUp 1s ease forwards;
+}
+
+/* Quiz Results */
+#quiz-results {
+    background: transparent;
+    justify-content: center;
+}
+
+.quiz-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-lg);
+    padding: var(--sp-2xl) var(--sp-md);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.results-title {
+    font-size: var(--fs-2xl);
+    font-weight: 900;
+    color: var(--text-heading);
+    animation: zoomIn 0.5s ease both;
+}
+
+.results-score {
+    font-size: var(--fs-3xl);
+    font-weight: 900;
+    color: var(--accent-primary);
+    animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.results-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-md);
+    width: 100%;
+}
+
+.result-stat {
+    padding: var(--sp-md);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+body.ramadan .result-stat {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.normal .result-stat {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.result-stat .stat-value {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: var(--text-heading);
+}
+
+.result-stat .stat-label {
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* --- Puzzle Game --- */
+#puzzle-select {
+    background: transparent;
+    padding: var(--sp-2xl) var(--sp-md) var(--sp-lg);
+}
+
+.puzzle-select-title {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: var(--text-heading);
+    margin-bottom: var(--sp-lg);
+    text-align: center;
+}
+
+.puzzle-grid-select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-md);
+    width: 100%;
+    max-width: 400px;
+}
+
+.puzzle-card-select {
+    aspect-ratio: 1;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    border: 3px solid var(--card-border);
+    transition: all var(--transition-bounce);
+}
+
+.puzzle-card-select:active {
+    transform: scale(0.93);
+}
+
+.puzzle-card-select img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.puzzle-card-select .puzzle-card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--sp-sm) var(--sp-md);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+body.ramadan .puzzle-card-select .puzzle-card-label {
+    background: linear-gradient(to top, rgba(13, 11, 46, 0.9), transparent);
+}
+
+body.normal .puzzle-card-select .puzzle-card-label {
+    background: linear-gradient(to top, rgba(61, 43, 31, 0.8), transparent);
+}
+
+/* Puzzle Play */
+#puzzle-game {
+    background: transparent;
+    padding: var(--sp-md);
+    padding-top: var(--sp-md);
+    padding-bottom: 85px;
+    gap: var(--sp-sm);
+}
+
+.puzzle-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+}
+
+.puzzle-info {
+    display: flex;
+    gap: var(--sp-lg);
+}
+
+.puzzle-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.puzzle-stat .stat-icon {
+    font-size: 1.1rem;
+}
+
+.puzzle-board {
+    width: min(90vw, 42vh, 380px);
+    aspect-ratio: 1;
+    display: grid;
+    gap: 3px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 3px solid var(--card-border);
+    flex-shrink: 0;
+}
+
+body.ramadan .puzzle-board {
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+body.normal .puzzle-board {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.puzzle-piece {
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.puzzle-piece:active {
+    transform: scale(0.93);
+    z-index: 5;
+}
+
+.puzzle-piece.selected {
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    z-index: 5;
+    transform: scale(1.05);
+}
+
+.puzzle-piece.empty {
+    background: rgba(0, 0, 0, 0.3) !important;
+    cursor: default;
+}
+
+.puzzle-piece.correct {
+    border-color: var(--correct-color);
+}
+
+.puzzle-reference {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 2px solid var(--card-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.puzzle-reference:active {
+    transform: scale(2);
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+}
+
+.puzzle-reference img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.puzzle-difficulty {
+    display: flex;
+    gap: var(--sp-sm);
+}
+
+.difficulty-btn {
+    padding: var(--sp-sm) var(--sp-md);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+body.ramadan .difficulty-btn {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+body.normal .difficulty-btn {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.difficulty-btn.active {
+    background: var(--accent-primary) !important;
+    border-color: var(--accent-primary) !important;
+}
+
+body.ramadan .difficulty-btn.active {
+    color: #4A2800;
+}
+
+body.normal .difficulty-btn.active {
+    color: white;
+}
+
+/* --- Map Game --- */
+#map-game {
+    background: transparent;
+    padding: var(--sp-md);
+    padding-top: var(--sp-2xl);
+}
+
+.map-title {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: var(--text-heading);
+    margin-bottom: var(--sp-md);
+    text-align: center;
+}
+
+.map-container {
+    width: min(95vw, 450px);
+    position: relative;
+}
+
+.map-container svg {
+    width: 100%;
+    height: auto;
+}
+
+.map-container svg path {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+}
+
+body.ramadan .map-container svg path {
+    fill: rgba(100, 80, 160, 0.6);
+}
+
+body.normal .map-container svg path {
+    fill: rgba(0, 108, 53, 0.25);
+}
+
+.map-container svg path:hover,
+.map-container svg path:active {
+    filter: brightness(1.3) drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+    stroke-width: 2;
+}
+
+body.ramadan .map-container svg path:hover {
+    fill: rgba(255, 215, 0, 0.4);
+    stroke: rgba(255, 215, 0, 0.6);
+}
+
+body.normal .map-container svg path:hover {
+    fill: rgba(0, 108, 53, 0.4);
+    stroke: rgba(0, 108, 53, 0.6);
+}
+
+.map-container svg path.completed {
+    fill: rgba(46, 204, 113, 0.5) !important;
+    stroke: rgba(46, 204, 113, 0.8) !important;
+}
+
+@keyframes mapPulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+    }
+
+    50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+    }
+
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+    }
+}
+
+.map-icon {
+    animation: mapPulse 2s infinite ease-in-out;
+    transform-origin: center;
+}
+
+.map-region-label {
+    position: absolute;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--text-primary);
+    pointer-events: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.map-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    margin-top: var(--sp-md);
+    width: 100%;
+    max-width: 400px;
+}
+
+.map-progress-text {
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Region Info Modal */
+.region-modal-content {
+    text-align: center;
+}
+
+.region-name {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    color: var(--text-heading);
+    margin-bottom: var(--sp-sm);
+}
+
+.region-capital {
+    font-size: var(--fs-md);
+    color: var(--text-secondary);
+    margin-bottom: var(--sp-md);
+}
+
+.region-facts {
+    text-align: right;
+    font-size: var(--fs-sm);
+    color: var(--text-primary);
+    line-height: 1.8;
+    margin-bottom: var(--sp-lg);
+    padding: var(--sp-md);
+    border-radius: var(--radius-md);
+}
+
+body.ramadan .region-facts {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.normal .region-facts {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.region-questions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+}
+
+/* --- Competition Section --- */
+.competition-card {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--sp-xl);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    margin-bottom: var(--sp-lg);
+    border: 2px solid var(--accent-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+body.ramadan .competition-card {
+    background: linear-gradient(145deg, rgba(80, 50, 120, 0.8), rgba(40, 25, 70, 0.9));
+}
+
+body.normal .competition-card {
+    background: linear-gradient(145deg, rgba(0, 108, 53, 0.1), rgba(0, 140, 69, 0.05));
+}
+
+.competition-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.1), transparent 60%);
+    pointer-events: none;
+}
+
+.competition-card .comp-prize {
+    font-size: var(--fs-2xl);
+    margin-bottom: var(--sp-sm);
+}
+
+.competition-card .comp-title {
+    font-size: var(--fs-lg);
+    font-weight: 900;
+    color: var(--text-heading);
+    margin-bottom: var(--sp-xs);
+}
+
+.competition-card .comp-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--sp-md);
+}
+
+.competition-card .comp-countdown {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+/* ==================================================
+    Hawdaj Design System Overrides — Game Elements
+   ================================================== */
+
+/* --- Quiz Streak Badge --- */
+body.normal .quiz-streak {
+    background: linear-gradient(135deg, #F4A623, #E63946) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3) !important;
+    border: 2px solid #FFFFFF !important;
+    font-weight: 900 !important;
+    animation: streakPulse 2s ease-in-out infinite !important;
+}
+@keyframes streakPulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3); }
+    50% { box-shadow: 0 4px 20px rgba(230, 57, 70, 0.6), 0 0 30px rgba(244, 166, 35, 0.2); }
+}
+
+/* --- Quiz Results Stats --- */
+body.normal .result-stat {
+    background: #E0F5EC !important;
+    border: 3px solid #0B6E4F !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 0 #073B30 !important;
+}
+body.normal .result-stat .stat-value {
+    color: #0B6E4F !important;
+    font-weight: 900 !important;
+}
+
+/* --- Puzzle Select Cards --- */
+body.normal .puzzle-card-select {
+    border: 4px solid #0B6E4F !important;
+    border-radius: 24px !important;
+    box-shadow: 0 7px 0 #073B30, 0 12px 22px rgba(7, 59, 48, 0.1) !important;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease !important;
+}
+body.normal .puzzle-card-select:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 0 #073B30, 0 16px 28px rgba(7, 59, 48, 0.14) !important;
+}
+body.normal .puzzle-card-select:active {
+    transform: translateY(7px) scale(0.98) !important;
+    box-shadow: 0 0 0 #073B30 !important;
+}
+body.normal .puzzle-card-select .puzzle-card-label {
+    background: linear-gradient(to top, rgba(7, 59, 48, 0.95), transparent) !important;
+    font-weight: 900 !important;
+}
+
+/* --- Puzzle Board --- */
+body.normal .puzzle-board {
+    background: rgba(11, 110, 79, 0.05) !important;
+    border: 4.5px solid #0B6E4F !important;
+    box-shadow: 0 8px 0 #073B30, 0 14px 28px rgba(7, 59, 48, 0.1) !important;
+    border-radius: 22px !important;
+}
+body.normal .puzzle-piece.selected {
+    border: 3.5px solid #F4A623 !important;
+    box-shadow: 0 0 18px rgba(244, 166, 35, 0.6) !important;
+}
+body.normal .puzzle-reference {
+    border: 3px solid #0B6E4F !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 0 #073B30 !important;
+}
+
+/* --- Difficulty Buttons --- */
+body.normal .difficulty-btn {
+    background: #FFFEF7 !important;
+    border: 3px solid #0B6E4F !important;
+    color: #0B6E4F !important;
+    font-weight: 800 !important;
+    box-shadow: 0 5px 0 #073B30 !important;
+    border-radius: 18px !important;
+    transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease !important;
+}
+body.normal .difficulty-btn:active {
+    transform: translateY(5px) !important;
+    box-shadow: 0 0 0 transparent !important;
+}
+body.normal .difficulty-btn.active {
+    background: linear-gradient(180deg, #FFE082, #F4A623) !important;
+    border-color: #C17B1A !important;
+    color: #4A2800 !important;
+    box-shadow: 0 5px 0 #C17B1A !important;
+}
+
+/* --- Map Game Paths --- */
+body.normal .map-container svg path {
+    fill: rgba(11, 110, 79, 0.12) !important;
+    stroke: rgba(11, 110, 79, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+body.normal .map-container svg path:hover,
+body.normal .map-container svg path:active {
+    fill: rgba(244, 166, 35, 0.2) !important;
+    stroke: #F4A623 !important;
+    filter: drop-shadow(0 0 12px rgba(244, 166, 35, 0.7)) !important;
+}
+body.normal .map-container svg path.completed {
+    fill: rgba(45, 198, 83, 0.35) !important;
+    stroke: #2DC653 !important;
+}
+body.normal .map-region-label {
+    color: #1A2E2A !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+}
+body.normal .region-facts {
+    background: #E0F5EC !important;
+    border: 2.5px solid rgba(11, 110, 79, 0.15) !important;
+    border-radius: 16px !important;
+}
+
+/* --- Competition Card --- */
+body.normal .competition-card {
+    background: #FFFEF7 !important;
+    border: 4px solid #0B6E4F !important;
+    border-radius: 28px !important;
+    box-shadow: 0 7px 0 #073B30, 0 14px 25px rgba(7, 59, 48, 0.08) !important;
+}
+body.normal .competition-card::before {
+    background: radial-gradient(circle at 50% 0%, rgba(244, 166, 35, 0.12), transparent 60%) !important;
+}

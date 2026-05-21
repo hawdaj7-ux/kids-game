@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="screen-orientation" content="landscape">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>هودج — ألعاب تعليمية</title>
+    <meta name="description" content="هودج — ألعاب تعليمية ممتعة للأطفال عن تاريخ وثقافة المملكة العربية السعودية">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=Lalezar&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/themes.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/screens.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/games.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/admin.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/celebration.css?v=20260521_v5">
+    <link rel="stylesheet" href="css/inventory.css?v=20260521_v5">
+</head>
+
+<body class="normal">
+
+    <!-- Portrait Warning — DISABLED for portrait mode -->
+    </div>
+
+    <div id="app">
+        <!-- ═══════════════════════════════════════
+       GLOBAL BACKGROUND & PARTICLES
+       ═══════════════════════════════════════ -->
+        <div class="global-bg-container">
+            <img class="global-bg" src="assets/bg/magical_saudi_bg.png" alt="">
+            <div class="global-overlay"></div>
+        </div>
+        <canvas id="particle-canvas"></canvas>
+
+        <!-- ═══════════════════════════════════════
+       GLOBAL FLOATING BUTTONS
+       ═══════════════════════════════════════ -->
+        <div class="global-floating-buttons"
+            style="position:fixed; top:12px; left:12px; z-index:900; display:none; gap:10px; flex-direction:row-reverse; align-items:flex-start;">
+            <!-- Settings Button -->
+            <button id="btn-user-settings"
+                style="background:linear-gradient(135deg, rgba(30,136,229,0.8), rgba(21,101,192,0.8)); border:2px solid rgba(144,202,249,0.6); backdrop-filter:blur(8px); color:white; padding:8px 12px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,0.4); transition:transform 0.2s ease, box-shadow 0.2s ease;"
+                onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 8px 20px rgba(144,202,249,0.3)';"
+                onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.4)';">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png"
+                    class="ui-anim-icon" style="width:26px;height:26px;">
+                <span style="font-size:0.7rem; font-weight:900; color:#bbdefb;">إعداداتي</span>
+            </button>
+
+            <!-- Notification & Chat Button -->
+            <button id="btn-student-notif"
+                style="background:linear-gradient(135deg, rgba(230,126,34,0.8), rgba(211,84,0,0.8)); border:2px solid rgba(255,215,0,0.8); backdrop-filter:blur(8px); color:white; padding:8px 12px; border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,0.4); transition:transform 0.2s ease, box-shadow 0.2s ease; position:relative;"
+                onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 8px 20px rgba(255,215,0,0.3)';"
+                onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.4)';">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bell.png"
+                    class="ui-anim-icon" style="width:26px;height:26px;animation:pulse 2s infinite ease-in-out;">
+                <span style="font-size:0.7rem; font-weight:900; color:#FFD700;">الإشعارات</span>
+                <span id="student-notif-badge"
+                    style="position:absolute; top:-8px; right:-8px; background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; border-radius:50%; width:24px; height:24px; font-size:0.8rem; display:flex; align-items:center; justify-content:center; font-weight:900; border:2px solid white; display:none; box-shadow:0 2px 8px rgba(231,76,60,0.6); animation:heartbeat 2s ease-in-out infinite;">0</span>
+            </button>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+       SPLASH SCREEN
+       ═══════════════════════════════════════ -->
+        <section id="splash-screen" class="screen active">
+            <!-- Ramadan Decorations -->
+            <div class="splash-lanterns ramadan-decor">
+                <img class="splash-lantern" src="assets/ui/fanous.png" alt="">
+                <img class="splash-lantern" src="assets/ui/fanous.png" alt="">
+                <img class="splash-lantern" src="assets/ui/fanous.png" alt="">
+                <img class="splash-lantern" src="assets/ui/fanous.png" alt="">
+            </div>
+            <div class="splash-stars ramadan-decor" id="splash-stars"></div>
+
+            <div class="splash-characters-container">
+                <img class="splash-character azzam" src="assets/char/azzam.jpeg" id="splash-azzam">
+                <img class="splash-character jadel" src="assets/char/El jadel.jpeg" id="splash-jadel">
+            </div>
+
+            <img class="splash-logo" src="assets/ui/logo.png" alt="هودج">
+            <h1 class="splash-title">هودج الجادل</h1>
+            <p class="splash-subtitle">✨ مغامرة خيالية ممتعة للاستكشاف والتعلم عن معالم السعودية! 🌴</p>
+            <button class="splash-play-btn" id="splash-play-btn" aria-label="ابدأ">▶</button>
+            <div id="splash-loading-indicator" style="display:none; color:rgba(255,255,255,0.7); font-size:0.9rem; margin-top:12px; animation: pulse 1s ease-in-out infinite;">⏳ جاري تحميل البيانات...</div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       MAIN MENU
+       ═══════════════════════════════════════ -->
+        <section id="main-menu" class="screen">
+            <div class="menu-content">
+                <!-- Header -->
+                <div class="menu-header"
+                    style="position:relative; display:flex; justify-content:center; align-items:center; min-height:80px;">
+                    <img class="menu-logo" src="assets/ui/logo.png" alt="هودج" style="position:absolute; right:0;">
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin:0 auto;">
+                        <div class="score-display" id="menu-total-score">
+                            <!-- Populated dynamically -->
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                                class="ui-anim-icon" style="width:24px;height:24px;">
+                            <span id="total-score-val">0</span>
+                        </div>
+                        <span class="player-name-display" id="player-name-display"></span>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <div class="menu-title-area">
+                    <h1 class="menu-title">هودج الجادل</h1>
+                    <p class="menu-subtitle ramadan-decor"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Crescent%20Moon.png"
+                            class="ui-anim-icon">
+                        رمضان كريم <img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Crescent%20Moon.png"
+                            class="ui-anim-icon"></p>
+                    <p class="menu-subtitle normal-decor">🌴 العب وتعلم عن تاريخ وثقافة وطنا المعطاء! 🌟</p>
+                </div>
+
+                <!-- Game Cards -->
+                <div class="menu-games">
+                    <div class="menu-game-card" data-game="quiz" id="card-quiz">
+                        <img class="card-icon" src="assets/ui/icons/quiz icon.png" alt="">
+                        <span class="card-label">أسئلة وتحديات</span>
+                    </div>
+                    <div class="menu-game-card" data-game="puzzle" id="card-puzzle">
+                        <img class="card-icon" src="assets/ui/icons/puzzle icon.png" alt="">
+                        <span class="card-label">بازل المعالم</span>
+                    </div>
+                    <div class="menu-game-card" data-game="map" id="card-map">
+                        <img class="card-icon" src="assets/ui/icons/saudia map.png" alt="">
+                        <span class="card-label">خريطة السعودية</span>
+                    </div>
+                </div>
+
+                <!-- Daily Question Card -->
+                <div id="daily-question-card" class="hidden"
+                    style="width:100%; max-width:500px; margin-top:16px; cursor:pointer; animation: slideUp 0.5s ease 0.7s both;">
+                    <div class="glass-panel"
+                        style="padding: 16px 20px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden;">
+                        <div
+                            style="position:absolute; top:-20px; right:-20px; width:80px; height:80px; background:radial-gradient(circle, rgba(255,152,0,0.2), transparent); border-radius:50%; pointer-events:none;">
+                        </div>
+                        <div style="font-size:2.2rem; flex-shrink:0; animation: pulse 2s ease-in-out infinite;">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Thinking%20Face.png"
+                                class="ui-anim-icon" style="width:2.2em;height:2.2em;">
+                        </div>
+                        <div style="flex:1; min-width:0;">
+                            <div style="font-weight:900; color:var(--text-heading); font-size:1rem; margin-bottom:2px;">
+                                سؤال اليوم</div>
+                            <div style="font-size:var(--fs-xs); color:var(--text-secondary);">جاوب صح واحصل على نقاط
+                                مضاعفة!</div>
+                        </div>
+                        <div
+                            style="padding:8px 16px; border-radius:20px; background:linear-gradient(135deg, #FFB74D, #FF9800); color:#FFFFFF; font-weight:900; font-size:var(--fs-sm); white-space:nowrap; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);">
+                            <span id="daily-q-status">×2 نقاط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Competitions Banner (Full Beautiful Design) -->
+                <div id="home-competitions-banner"
+                    style="width:100%; max-width:520px; display:none; margin-top:12px; animation: slideUp 0.5s ease both;">
+                    <div class="glass-panel" style="
+                        padding: 14px 18px;
+                        position: relative; overflow: hidden;">
+                        <!-- Animated sparkles -->
+                        <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
+                            <div
+                                style="position:absolute; top:10%; right:5%; width:6px; height:6px; background:#FFD700; border-radius:50%; animation: float 3s ease-in-out infinite; opacity:0.5;">
+                            </div>
+                            <div
+                                style="position:absolute; top:60%; left:8%; width:5px; height:5px; background:#FF8C00; border-radius:50%; animation: float 4s ease-in-out infinite 0.5s; opacity:0.4;">
+                            </div>
+                        </div>
+                        <h3
+                            style="color:#E65100; font-weight:900; margin-bottom:8px; display:flex; align-items:center; gap:8px; font-size:0.95rem; text-shadow: 0 0 10px rgba(255,215,0,0.4);">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
+                                class="ui-anim-icon" style="width:20px;height:20px;">
+                            🏆 مسابقات نشطة!
+                        </h3>
+                        <div id="home-competitions-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+                    </div>
+                </div>
+
+                <!-- Bottom Buttons -->
+                <div class="menu-bottom-btns" style="display:flex; justify-content:center; gap:12px; margin-top:16px;">
+                    <button class="menu-bottom-btn" id="btn-leaderboard"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Trophy.png"
+                            class="ui-anim-icon">
+                        المتصدرين</button>
+                    <button class="menu-bottom-btn" id="btn-store"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Shopping%20Cart.png"
+                            class="ui-anim-icon">
+                        المتجر</button>
+                    <button class="menu-bottom-btn" id="btn-daily"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Tear-Off%20Calendar.png"
+                            class="ui-anim-icon">
+                        المهام</button>
+                </div>
+
+                <!-- Admin Gear (Hidden) -->
+                <button class="admin-gear" id="btn-admin" aria-label="المشرف"><img
+                        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png"
+                        class="ui-anim-icon"></button>
+            </div>
+            <!-- Characters (outside scroll, anchored to viewport bottom) -->
+            <div class="menu-characters">
+                <img class="menu-character azzam" src="assets/char/azzam.jpeg" alt="عزّام" id="menu-azzam">
+                <img class="menu-character jadel" src="assets/char/El jadel.jpeg" alt="الجادل" id="menu-jadel">
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       QUIZ CATEGORY SELECTION
+       ═══════════════════════════════════════ -->
+        <section id="quiz-category" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <h2 class="quiz-cat-title">اختر نوع الأسئلة</h2>
+
+            <div class="quiz-categories" id="quiz-cat-list">
+                <div class="quiz-cat-card" data-cat="general" style="animation-delay:0.1s">
+                    <div class="quiz-cat-icon"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Castle.png"
+                            class="ui-anim-icon" style="width:2em;height:2em;"></div>
+                    <div class="quiz-cat-info">
+                        <h3>أسئلة عامة</h3>
+                        <p>أسئلة ممتعة عن تاريخ وثقافة السعودية</p>
+                    </div>
+                </div>
+                <div class="quiz-cat-card" data-cat="episodes" style="animation-delay:0.2s">
+                    <div class="quiz-cat-icon"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Clapper%20Board.png"
+                            class="ui-anim-icon" style="width:2em;height:2em;"></div>
+                    <div class="quiz-cat-info">
+                        <h3>حلقات هودج الجادل</h3>
+                        <p>أسئلة عن حلقات المسلسل — ٢٠ حلقة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episodes Sub-screen -->
+            <div id="episodes-list" class="hidden"
+                style="width:100%; max-width:500px; padding:0 16px; overflow-y:auto; max-height:90vh;">
+                <button class="btn btn-glass mb-lg" id="back-to-cats" style="align-self:flex-start;">← العودة
+                    للأقسام</button>
+
+                <!-- Chapter 1 -->
+                <div class="chapter-section">
+                    <h3 class="chapter-title"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Open%20Book.png"
+                            class="ui-anim-icon"> الفصل الأول: التأسيس</h3>
+                    <div class="episodes-grid" id="ch1-episodes"></div>
+                </div>
+                <!-- Chapter 2 -->
+                <div class="chapter-section">
+                    <h3 class="chapter-title"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Classical%20Building.png"
+                            class="ui-anim-icon"> الفصل الثاني: المعالم التاريخية</h3>
+                    <div class="episodes-grid" id="ch2-episodes"></div>
+                </div>
+                <!-- Chapter 3 -->
+                <div class="chapter-section">
+                    <h3 class="chapter-title"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food%20and%20drink/Hot%20Beverage.png"
+                            class="ui-anim-icon"> الفصل الثالث: تراثنا الحي</h3>
+                    <div class="episodes-grid" id="ch3-episodes"></div>
+                </div>
+                <!-- Chapter 4 -->
+                <div class="chapter-section">
+                    <h3 class="chapter-title"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png"
+                            class="ui-anim-icon"> الفصل الرابع: مستقبلنا</h3>
+                    <div class="episodes-grid" id="ch4-episodes"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       QUIZ GAME PLAY
+       ═══════════════════════════════════════ -->
+        <section id="quiz-game" class="screen">
+            <button class="back-btn" data-back="quiz-category">→</button>
+
+            <div class="quiz-header">
+                <div class="timer-ring" id="quiz-timer-ring">
+                    <svg viewBox="0 0 54 54">
+                        <circle class="ring-bg" cx="27" cy="27" r="25" />
+                        <circle class="ring-fg" cx="27" cy="27" r="25" id="quiz-timer-circle" />
+                    </svg>
+                    <span class="timer-text" id="quiz-timer-text">15</span>
+                </div>
+                <div class="quiz-progress">
+                    <div class="quiz-progress-text" id="quiz-progress-text">1/10</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" id="quiz-progress-fill" style="width:10%"></div>
+                    </div>
+                </div>
+                <div class="score-display">
+                    <div class="coin-icon"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                            class="ui-anim-icon"></div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.1;">
+                        <span id="quiz-score-val" style="font-weight:900; font-size:1rem;">0</span>
+                        <span style="font-size:0.55rem; color:rgba(255,255,255,0.5);">هذه الجولة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak -->
+            <div class="quiz-streak hidden" id="quiz-streak">
+                <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
+                    class="ui-anim-icon"> <span id="streak-count">0</span>x سلسلة!
+            </div>
+
+            <!-- Question -->
+            <div class="quiz-question-area">
+                <div class="quiz-question-card">
+                    <p class="quiz-question-text" id="quiz-question-text">السؤال هنا</p>
+                    <img class="quiz-question-img hidden" id="quiz-question-img" alt="">
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="quiz-options" id="quiz-options">
+                <button class="quiz-option" data-idx="0"></button>
+                <button class="quiz-option" data-idx="1"></button>
+                <button class="quiz-option" data-idx="2"></button>
+                <button class="quiz-option" data-idx="3"></button>
+            </div>
+
+            <!-- Lifelines -->
+            <div class="quiz-lifelines">
+                <button class="lifeline-btn" id="lifeline-5050" title="50/50">
+                    ½
+                    <span class="lifeline-count" id="lifeline-5050-count">2</span>
+                </button>
+                <button class="lifeline-btn" id="lifeline-skip" title="تخطي">
+                    ⏭
+                    <span class="lifeline-count" id="lifeline-skip-count">1</span>
+                </button>
+                <button class="lifeline-btn" id="lifeline-hint" title="تلميح">
+                    💡
+                    <span class="lifeline-count" id="lifeline-hint-count">1</span>
+                </button>
+            </div>
+
+            <!-- Characters Reaction -->
+            <div class="game-characters" id="quiz-characters">
+                <img src="assets/char/azzam.jpeg" alt="" id="quiz-char-azzam" class="game-char-img azzam">
+                <img src="assets/char/El jadel.jpeg" alt="" id="quiz-char-jadel" class="game-char-img jadel">
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       QUIZ RESULTS
+       ═══════════════════════════════════════ -->
+        <section id="quiz-results" class="screen">
+            <div class="quiz-results">
+                <div class="stars" id="result-stars">
+                    <span class="star"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                            class="ui-anim-icon"></span>
+                    <span class="star"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                            class="ui-anim-icon"></span>
+                    <span class="star"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                            class="ui-anim-icon"></span>
+                </div>
+                <h2 class="results-title" id="results-title">أحسنت!</h2>
+                <div class="results-score" id="results-score">0</div>
+                <p style="color:var(--text-secondary); font-size:var(--fs-md);">نقطة</p>
+
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <div class="stat-value" id="stat-correct" style="color:var(--correct-color)">0</div>
+                        <div class="stat-label">صحيحة</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-value" id="stat-wrong" style="color:var(--wrong-color)">0</div>
+                        <div class="stat-label">خاطئة</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-value" id="stat-streak" style="color:var(--accent-primary)">0</div>
+                        <div class="stat-label">أفضل سلسلة</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:16px;">
+                    <button class="btn btn-primary" id="quiz-retry">🔁 إعادة</button>
+                    <button class="btn btn-glass" id="quiz-home">🏠 القائمة</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       PUZZLE SELECT
+       ═══════════════════════════════════════ -->
+        <section id="puzzle-select" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <h2 class="puzzle-select-title">🧩 اختر نوع التحدي</h2>
+
+            <div
+                style="display:flex; flex-direction:column; gap:18px; width:100%; max-width:420px; margin-bottom:24px; padding: 0 12px;">
+
+                <!-- Easy Mode Card: Swap -->
+                <div class="puzzle-mode-card glass-panel" data-mode="swap" style="
+                    background: linear-gradient(135deg, #FF8F00, #FFB300);
+                    padding: 20px 18px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    box-shadow: 0 6px 0 #F57C00, 0 8px 15px rgba(255,143,0,0.3);
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <!-- Shine effect -->
+                    <div
+                        style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%); animation: shineSlide 3s infinite; pointer-events:none;">
+                    </div>
+                    <div
+                        style="font-size:3.2rem; flex-shrink:0; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); animation: pulse 2s infinite; position:relative; z-index:1;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Puzzle%20Piece.png"
+                            class="ui-anim-icon" style="width:1em;height:1em;">
+                    </div>
+                    <div style="flex:1; text-align:right; position:relative; z-index:1;">
+                        <h3
+                            style="color:white; font-weight:900; font-size:1.25rem; margin-bottom:4px; text-shadow: 0 2px 6px rgba(0,0,0,0.35);">
+                            🟡 سحب وإفلات</h3>
+                        <p style="color:rgba(255,255,255,0.95); font-size:0.82rem; font-weight:600; line-height:1.4;">
+                            بدّل القطع بسهولة! اضغط على قطعتين لتبديل أماكنهم.</p>
+                        <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+                            <span
+                                style="background:rgba(255,255,255,0.25); padding:4px 10px; border-radius:20px; font-size:0.75rem; color:white; font-weight:800; backdrop-filter:blur(4px);">سهل
+                                😊</span>
+                            <span
+                                style="background:rgba(255,255,255,0.25); padding:4px 10px; border-radius:20px; font-size:0.75rem; color:white; font-weight:800; backdrop-filter:blur(4px);">+10
+                                نقاط ⭐</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="puzzle-mode-card glass-panel" data-mode="slide" style="
+                    background: linear-gradient(135deg, #D32F2F, #F44336);
+                    padding: 20px 18px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    box-shadow: 0 6px 0 #B71C1C, 0 8px 15px rgba(244,67,54,0.3);
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <!-- Shine effect -->
+                    <div
+                        style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%); animation: shineSlide 3s infinite 1.5s; pointer-events:none;">
+                    </div>
+                    <!-- Sparkle particles -->
+                    <div
+                        style="position:absolute; top:10%; right:15%; width:6px; height:6px; background:white; border-radius:50%; animation: pulse 1.5s infinite; opacity:0.7; pointer-events:none;">
+                    </div>
+                    <div
+                        style="position:absolute; bottom:20%; left:20%; width:4px; height:4px; background:#FFD700; border-radius:50%; animation: pulse 2s infinite 0.5s; opacity:0.6; pointer-events:none;">
+                    </div>
+                    <div
+                        style="font-size:3.2rem; flex-shrink:0; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); animation: float 3s ease-in-out infinite; position:relative; z-index:1;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
+                            class="ui-anim-icon" style="width:1em;height:1em;">
+                    </div>
+                    <div style="flex:1; text-align:right; position:relative; z-index:1;">
+                        <h3
+                            style="color:white; font-weight:900; font-size:1.25rem; margin-bottom:4px; text-shadow: 0 2px 6px rgba(0,0,0,0.35);">
+                            🔥 الترتيب المنزلق</h3>
+                        <p style="color:rgba(255,255,255,0.95); font-size:0.82rem; font-weight:600; line-height:1.4;">
+                            حرك القطع للمكان الفاضي واتحدى نفسك!</p>
+                        <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+                            <span
+                                style="background:rgba(255,255,255,0.25); padding:4px 10px; border-radius:20px; font-size:0.75rem; color:white; font-weight:800; backdrop-filter:blur(4px);">تحدي
+                                💪</span>
+                            <span
+                                style="background:rgba(255,255,255,0.25); padding:4px 10px; border-radius:20px; font-size:0.75rem; color:white; font-weight:800; backdrop-filter:blur(4px);">+30
+                                نقطة 🔥</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="puzzle-grid-select" id="puzzle-list" style="display:none;"></div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       PUZZLE GAME PLAY
+       ═══════════════════════════════════════ -->
+        <section id="puzzle-game" class="screen">
+            <button class="back-btn" data-back="puzzle-select">→</button>
+
+            <div class="puzzle-header">
+                <div class="puzzle-reference" id="puzzle-ref">
+                    <img src="" alt="المرجع" id="puzzle-ref-img">
+                </div>
+                <h3 style="flex:1; text-align:center; color:var(--text-heading); font-weight:800; font-size:var(--fs-lg);"
+                    id="puzzle-name"></h3>
+                <div class="puzzle-info">
+                    <div class="puzzle-stat">
+                        <span class="stat-icon"><img
+                                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Stopwatch.png"
+                                class="ui-anim-icon" style="width:1.2em;height:1.2em;"></span>
+                        <span id="puzzle-timer">0:00</span>
+                    </div>
+                    <div class="puzzle-stat">
+                        <span class="stat-icon"><img
+                                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Up.png"
+                                class="ui-anim-icon" style="width:1.2em;height:1.2em;"></span>
+                        <span id="puzzle-moves">0</span>
+                    </div>
+                    <div class="puzzle-stat" style="background:rgba(255,215,0,0.15); border:1px solid rgba(255,215,0,0.3); border-radius:12px; padding:4px 10px;">
+                        <span class="stat-icon">⭐</span>
+                        <span id="puzzle-score-val" style="color:#FFD700; font-weight:900;">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="puzzle-board" id="puzzle-board"></div>
+
+            <div style="display:flex; gap:12px; margin-top:16px; justify-content:center; width:100%; max-width:400px;">
+                <button class="btn btn-glass" id="puzzle-shuffle">🔀 خلط</button>
+                <button class="btn btn-primary" id="puzzle-next-btn" style="display:none; background:linear-gradient(180deg, #FFE082, #F4A623) !important; color:#4A2800 !important; font-weight:900 !important; border:4px solid #C17B1A !important; border-radius:18px !important; box-shadow:0 6px 0 #9A5F0F !important; min-width:140px; font-size:var(--fs-md); padding:10px 20px;">البازل التالي ➡️</button>
+            </div>
+
+            <!-- Puzzle Characters -->
+            <div class="game-characters">
+                <img src="assets/char/azzam.jpeg" class="game-char-img azzam" id="puzzle-char-azzam">
+                <img src="assets/char/El jadel.jpeg" class="game-char-img jadel" id="puzzle-char-jadel">
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       MAP GAME
+       ═══════════════════════════════════════ -->
+        <section id="map-game" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <h2 class="map-title"><img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Compass.png"
+                    class="ui-anim-icon"> خريطة السعودية</h2>
+
+            <div class="map-container" id="map-container">
+                <!-- SVG Map injected via JS -->
+            </div>
+            <div id="map-tooltip"
+                style="display:none; position:fixed; pointer-events:none; background:rgba(0,0,0,0.8); color:white; padding:4px 10px; border-radius:8px; font-size:var(--fs-sm); font-weight:700; z-index:9999; box-shadow:0 4px 10px rgba(0,0,0,0.3); transform:translate(-50%,-100%); margin-top:-10px;">
+            </div>
+
+            <div class="map-progress">
+                <div class="map-progress-text" id="map-progress-text">0/13 منطقة</div>
+                <div class="progress-bar" style="flex:1;">
+                    <div class="progress-bar-fill" id="map-progress-fill" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Map Characters -->
+            <div class="game-characters">
+                <img src="assets/char/azzam.jpeg" class="game-char-img azzam" id="map-char-azzam">
+                <img src="assets/char/El jadel.jpeg" class="game-char-img jadel" id="map-char-jadel">
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       REGION INFO MODAL
+       ═══════════════════════════════════════ -->
+        <div class="modal-overlay" id="region-modal">
+            <div class="modal region-modal-content">
+                <h3 class="region-name" id="region-name"></h3>
+                <p class="region-capital" id="region-capital"></p>
+                <div class="region-facts" id="region-facts"></div>
+
+                <div id="region-clothing-container"
+                    style="display:none; text-align:center; margin: 12px 0; background:rgba(0,0,0,0.03); padding:12px; border-radius:12px; border:1px solid rgba(0,0,0,0.05);">
+                    <h4 style="color:var(--accent-primary); font-size:var(--fs-sm); margin-bottom:8px;"><img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Dress.png"
+                            class="ui-anim-icon">
+                        اللبس
+                        التقليدي</h4>
+                    <img id="region-clothing-display-img" src=""
+                        style="max-width:100%; max-height:150px; border-radius:8px; margin:0 auto 8px; display:none; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                    <p id="region-clothing-display-text" style="font-size:var(--fs-xs); color:var(--text-secondary);">
+                    </p>
+                </div>
+
+                <h4 style="color:var(--text-heading); font-weight:800; margin-bottom:12px;">اختبر معلوماتك!</h4>
+                <div class="region-questions" id="region-questions"></div>
+                <button class="btn btn-primary w-full" id="close-region" style="margin-top:16px;">✓ تم</button>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+       LEADERBOARD
+       ═══════════════════════════════════════ -->
+        <section id="leaderboard" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <h2 class="lb-title"><img
+                    src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Trophy.png"
+                    class="ui-anim-icon"> لوحة المتصدرين</h2>
+
+            <div class="lb-player-count-badge">
+                <span>🎮</span> <span id="lb-player-count">0</span> لاعب مسجل
+            </div>
+
+            <!-- Competitions Section -->
+            <div id="competitions-section" style="margin-bottom:20px;">
+                <!-- Filled dynamically by leaderboard.js -->
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs mb-lg" id="lb-tabs">
+                <button class="tab active" data-lb="overall">
+                    <span class="tab-icon">🏆</span>
+                    <span class="tab-label">الإجمالي</span>
+                </button>
+                <button class="tab" data-lb="quiz">
+                    <span class="tab-icon">❓</span>
+                    <span class="tab-label">الأسئلة</span>
+                </button>
+                <button class="tab" data-lb="puzzle">
+                    <span class="tab-icon">🧩</span>
+                    <span class="tab-label">البازل</span>
+                </button>
+                <button class="tab" data-lb="map">
+                    <span class="tab-icon">🗺️</span>
+                    <span class="tab-label">الخريطة</span>
+                </button>
+            </div>
+
+            <!-- Top 3 -->
+            <div class="lb-top3" id="lb-top3"></div>
+
+            <!-- Rest of list -->
+            <div class="lb-list" id="lb-list"></div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       STORE SCREEN
+       ═══════════════════════════════════════ -->
+        <section id="store-screen" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <!-- Store Header -->
+            <div style="text-align:center; padding: 6px 0 10px;">
+                <h2
+                    style="font-size:1.3rem; font-weight:900; color:#FFD700; text-shadow: 0 2px 8px rgba(255,215,0,0.3); margin:0;">
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Shopping%20Cart.png"
+                        style="width:24px;height:24px;vertical-align:middle;"> المتجر
+                </h2>
+                <div
+                    style="display:inline-flex; align-items:center; gap:4px; background:rgba(255,215,0,0.15); padding:4px 14px; border-radius:16px; margin-top:6px; border:1px solid rgba(255,215,0,0.3);">
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                        style="width:16px;height:16px;">
+                    <span id="store-score-val" style="font-weight:900; font-size:0.9rem; color:#FFD700;">0</span>
+                </div>
+            </div>
+
+            <!-- Store Grid -->
+            <div id="store-items-grid" style="
+                display:grid; 
+                justify-content: center;
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 10px; 
+                padding: 0 12px 40px; width: 100%; max-width:550px; margin:0 auto;
+                overflow-y: auto;
+                max-height: 70vh;
+                scrollbar-width: thin;
+            ">
+                <!-- Filled dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       DAILY TASKS
+       ═══════════════════════════════════════ -->
+        <section id="daily-tasks" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <div class="daily-tasks-container" style="width:100%; max-width:500px; padding:0 16px;">
+                <div class="daily-header" style="text-align:center; margin-bottom:24px;">
+                    <div style="font-size:3rem; margin-bottom:8px; animation: pulse 2s ease-in-out infinite;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Tear-Off%20Calendar.png"
+                            class="ui-anim-icon" style="width:3em;height:3em;">
+                    </div>
+                    <h2 style="font-weight:900; color:var(--text-heading); font-size:var(--fs-xl); margin-bottom:4px;">
+                        المهام اليومية</h2>
+                    <p style="color:var(--text-secondary); font-size:var(--fs-sm);">أكمل المهام واحصل على نقاط
+                        إضافية!</p>
+                    <div id="daily-tasks-progress"
+                        style="margin-top:12px; display:flex; align-items:center; gap:8px; justify-content:center;">
+                        <div class="progress-bar" style="width:200px;">
+                            <div class="progress-bar-fill" id="daily-progress-fill" style="width:0%"></div>
+                        </div>
+                        <span id="daily-progress-text"
+                            style="font-size:var(--fs-xs); color:var(--text-secondary); font-weight:700;">0/3</span>
+                    </div>
+                </div>
+
+                <div id="daily-tasks-list"
+                    style="display:flex; flex-direction:column; gap:12px; animation: fadeInUp 0.5s ease both;">
+                    <!-- Filled dynamically by JS -->
+                </div>
+
+                <div id="daily-bonus-section" class="hidden"
+                    style="text-align:center; margin-top:24px; padding:20px; border-radius:16px; background:linear-gradient(135deg, rgba(46,204,113,0.15), rgba(39,174,96,0.2)); border:2px solid rgba(46,204,113,0.4); animation: zoomIn 0.5s ease both;">
+                    <div style="font-size:2rem; margin-bottom:8px;">🎊</div>
+                    <div style="font-weight:900; color:#2ecc71; font-size:var(--fs-lg);">أحسنت! أكملت جميع المهام!</div>
+                    <div style="color:var(--text-secondary); font-size:var(--fs-sm); margin-top:4px;">+50 نقطة مكافأة
+                        إضافية</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       ADMIN LOGIN
+       ═══════════════════════════════════════ -->
+        <section id="admin-login" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <div class="admin-login-card">
+                <div class="admin-login-icon">🔐</div>
+                <h2 class="admin-login-title">دخول المشرف</h2>
+                <input type="password" class="input-field" id="admin-password" placeholder="كلمة المرور"
+                    autocomplete="off">
+                <button class="btn btn-primary w-full" id="admin-login-btn" style="margin-top:12px;">دخول</button>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       ADMIN PANEL
+       ═══════════════════════════════════════ -->
+        <section id="admin-panel" class="screen">
+            <button class="back-btn" data-back="main-menu">→</button>
+
+            <div class="admin-header">
+                <h2 class="admin-title">⚙️ لوحة المشرف</h2>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="btn btn-glass" id="admin-notif-btn" title="الإشعارات والرسائل"
+                        style="position:relative;font-size:1.2rem;padding:6px 12px;display:none;">
+                        🔔 <span id="admin-notif-badge"
+                            style="position:absolute;top:-5px;right:-5px;background:#e74c3c;color:white;border-radius:50%;width:18px;height:18px;font-size:0.6rem;display:flex;align-items:center;justify-content:center;font-weight:900;">0</span>
+                    </button>
+                    <button class="btn btn-glass" id="admin-logout" style="font-size:var(--fs-sm);">خروج</button>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <div class="tabs" id="admin-tabs">
+                    <button class="tab active" data-admin-tab="quiz">الأسئلة</button>
+                    <button class="tab" data-admin-tab="puzzle">البازل</button>
+                    <button class="tab" data-admin-tab="map">الخريطة</button>
+                    <button class="tab" data-admin-tab="theme">المظهر</button>
+                    <button class="tab" data-admin-tab="points">النقاط</button>
+                    <button class="tab" data-admin-tab="competitions">المسابقات</button>
+                    <button class="tab" data-admin-tab="store">المتجر</button>
+                    <button class="tab" data-admin-tab="import">استيراد</button>
+                    <button class="tab" data-admin-tab="settings">الإعدادات</button>
+                    <button class="tab" data-admin-tab="users" style="color:#5bc0de;">👥 المستخدمين</button>
+                    <button class="tab" data-admin-tab="dev" style="color:#d9534f;">المطور 💻</button>
+                </div>
+            </div>
+
+            <div class="admin-content" id="admin-content">
+                <!-- Quiz Management -->
+                <div class="admin-section active" data-admin-section="quiz">
+                    <div class="admin-card" style="margin-bottom: 16px; padding: 16px; background: rgba(0,0,0,0.1); border-radius: 12px; display:flex; flex-direction:column; gap:14px;">
+                        <label style="display:flex; align-items:center; gap:8px; font-weight:700; color:var(--text-primary); cursor:pointer;">
+                            <input type="checkbox" id="quiz-randomize-setting" style="width:18px;height:18px;"> تعيين أسئلة اللعبة لتظهر بترتيب عشوائي للاعبين
+                        </label>
+                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <label style="font-weight:700; color:var(--text-primary); white-space:nowrap;">🔢 عدد خيارات كل سؤال:</label>
+                            <select id="quiz-options-count" class="input-field" style="width:auto; padding:6px 14px; font-size:var(--fs-sm);">
+                                <option value="2">خيارين</option>
+                                <option value="3">3 خيارات</option>
+                                <option value="4" selected>4 خيارات</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <label style="font-weight:700; color:var(--text-primary); white-space:nowrap;">📋 عدد الأسئلة في كل جولة:</label>
+                            <select id="quiz-question-limit" class="input-field" style="width:auto; padding:6px 14px; font-size:var(--fs-sm);">
+                                <option value="0">كل الأسئلة المتاحة</option>
+                                <option value="5">5 أسئلة</option>
+                                <option value="10" selected>10 أسئلة</option>
+                                <option value="15">15 سؤال</option>
+                                <option value="20">20 سؤال</option>
+                                <option value="30">30 سؤال</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-title" style="flex-wrap: wrap; gap: 8px;">
+                            <span>أسئلة عامة</span>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-glass" id="select-all-general-q" style="font-size:var(--fs-xs); padding:6px 12px; color:var(--text-primary); border: 1px solid rgba(255,255,255,0.3);">☑️ تحديد الكل</button>
+                                <button class="btn btn-glass" id="delete-selected-general-q" style="font-size:var(--fs-xs); padding:6px 12px; color:#e74c3c; border: 1px solid rgba(231,76,60,0.3);">🗑️ حذف المحدد</button>
+                                <button class="btn btn-primary" id="add-general-q" style="font-size:var(--fs-xs); padding:6px 12px;">+ إضافة</button>
+                            </div>
+                        </div>
+                        <div class="question-list" id="general-q-list"></div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-title" style="flex-wrap: wrap; gap: 8px;">
+                            <span>أسئلة الحلقات</span>
+                            <select class="input-field" id="episode-select" style="width:auto; padding:6px 12px; font-size:var(--fs-xs); display:inline;"></select>
+                        </div>
+                        <div id="episode-q-area">
+                            <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+                                <button class="btn btn-primary" id="add-episode-q" style="font-size:var(--fs-xs); padding:6px 12px;">+ إضافة سؤال للحلقة</button>
+                                <button class="btn btn-glass" id="select-all-episode-q" style="font-size:var(--fs-xs); padding:6px 12px; color:var(--text-primary); border: 1px solid rgba(255,255,255,0.3);">☑️ تحديد الكل</button>
+                                <button class="btn btn-glass" id="delete-selected-episode-q" style="font-size:var(--fs-xs); padding:6px 12px; color:#e74c3c; border: 1px solid rgba(231,76,60,0.3);">🗑️ حذف المحدد</button>
+                            </div>
+                            <div class="question-list" id="episode-q-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Puzzle Management -->
+                <div class="admin-section" data-admin-section="puzzle">
+                    <div class="admin-card">
+                        <div class="admin-card-title">إضافة / تعديل بازل</div>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+                            <input type="text" class="input-field" id="puzzle-name-input"
+                                placeholder="اسم المعلم (مثلاً: قصر المصمك)">
+                            <input type="file" accept="image/*" id="puzzle-img-upload" style="display:none;">
+                            <input type="hidden" id="puzzle-img-data" value="">
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <button type="button" class="btn btn-glass" id="puzzle-img-btn"
+                                    style="font-size:var(--fs-sm); padding:8px 16px;"
+                                    onclick="document.getElementById('puzzle-img-upload').click()">📸 رفع صورة
+                                    البازل</button>
+                                <button type="button" class="btn btn-glass" id="puzzle-img-clear"
+                                    style="font-size:var(--fs-xs); padding:6px 10px; display:none;"
+                                    onclick="document.getElementById('puzzle-img-data').value='';document.getElementById('puzzle-img-preview').style.display='none';this.style.display='none';">✖
+                                    إزالة</button>
+                            </div>
+                            <img id="puzzle-img-preview"
+                                style="display:none; max-width:100%; max-height:150px; border-radius:8px; border:2px solid var(--border-color);">
+                            <input type="hidden" id="puzzle-edit-id" value="">
+                            <button class="btn btn-primary w-full" id="add-puzzle-btn">🖼️ حفظ البازل</button>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="admin-card-title">البازلات الحالية</div>
+                        <div class="question-list" id="puzzle-img-list"></div>
+                    </div>
+                </div>
+
+                <!-- Map Management -->
+                <div class="admin-section" data-admin-section="map">
+                    <div class="admin-card">
+                        <div class="admin-card-title">
+                            <span>اختر المنطقة</span>
+                            <select class="input-field" id="region-select"
+                                style="width:auto; padding:6px 12px; font-size:var(--fs-xs); display:inline;">
+                            </select>
+                        </div>
+
+                        <!-- Region Info Edit -->
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">
+                            <label
+                                style="font-size:var(--fs-sm); font-weight:700; color:var(--text-primary); display:block; margin-bottom:8px;">📝
+                                معلومات المنطقة</label>
+                            <textarea class="input-field" id="region-facts-edit" rows="3"
+                                placeholder="حقائق عن المنطقة..."></textarea>
+
+                            <label
+                                style="font-size:var(--fs-sm); font-weight:700; color:var(--text-primary); display:block; margin:12px 0 8px;">👗
+                                اللبس التقليدي</label>
+                            <input type="text" class="input-field" id="region-clothing-text"
+                                placeholder="وصف اللبس التقليدي للمنطقة..." style="margin-bottom:8px;">
+                            <input type="file" accept="image/*" id="region-clothing-upload" style="display:none;">
+                            <input type="hidden" id="region-clothing-img" value="">
+                            <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+                                <button type="button" class="btn btn-glass" id="region-clothing-btn"
+                                    style="font-size:var(--fs-xs); padding:6px 12px;"
+                                    onclick="document.getElementById('region-clothing-upload').click()">📸 رفع صورة
+                                    اللبس</button>
+                                <button type="button" class="btn btn-glass" id="region-clothing-clear"
+                                    style="font-size:var(--fs-xs); padding:6px 10px; display:none;"
+                                    onclick="document.getElementById('region-clothing-img').value='';document.getElementById('region-clothing-preview').style.display='none';this.style.display='none';">✖
+                                    إزالة</button>
+                            </div>
+                            <img id="region-clothing-preview"
+                                style="display:none; max-width:100%; max-height:120px; border-radius:8px; border:2px solid var(--border-color); margin-bottom:8px;">
+
+                            <button class="btn btn-success w-full" id="save-region-facts"
+                                style="margin-top:8px; font-size:var(--fs-sm);">💾 حفظ المعلومات</button>
+                        </div>
+
+                        <!-- Add Question -->
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color);">
+                            <label
+                                style="font-size:var(--fs-sm); font-weight:700; color:var(--text-primary); display:block; margin-bottom:8px;">➕
+                                إضافة سؤال للمنطقة</label>
+                            <input type="text" class="input-field" id="region-q-text" placeholder="نص السؤال"
+                                style="margin-bottom:6px;">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
+                                <input type="text" class="input-field" id="region-q-opt0" placeholder="الخيار ١">
+                                <input type="text" class="input-field" id="region-q-opt1" placeholder="الخيار ٢">
+                                <input type="text" class="input-field" id="region-q-opt2" placeholder="الخيار ٣">
+                                <input type="text" class="input-field" id="region-q-opt3" placeholder="الخيار ٤">
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                                <label
+                                    style="font-size:var(--fs-xs); color:var(--text-secondary); white-space:nowrap;">الإجابة
+                                    الصحيحة:</label>
+                                <select class="input-field" id="region-q-correct"
+                                    style="width:auto; padding:6px 12px; font-size:var(--fs-xs);">
+                                    <option value="0">الخيار ١</option>
+                                    <option value="1">الخيار ٢</option>
+                                    <option value="2">الخيار ٣</option>
+                                    <option value="3">الخيار ٤</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary w-full" id="add-region-q" style="font-size:var(--fs-sm);">➕
+                                إضافة السؤال</button>
+                        </div>
+
+                        <!-- Existing Questions -->
+                        <div>
+                            <label
+                                style="font-size:var(--fs-sm); font-weight:700; color:var(--text-primary); display:block; margin-bottom:8px;">📋
+                                الأسئلة الحالية</label>
+                            <div class="question-list" id="region-q-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme -->
+                <div class="admin-section" data-admin-section="theme">
+                    <div class="admin-card">
+                        <div class="theme-toggle-area">
+                            <div>
+                                <div class="theme-toggle-label">المظهر الحالي</div>
+                                <p style="font-size:var(--fs-xs); color:var(--text-secondary); margin-top:4px;"
+                                    id="current-theme-label">رمضاني 🌙</p>
+                            </div>
+                            <button class="theme-switch" id="theme-switch" aria-label="تبديل المظهر"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Points Config -->
+                <div class="admin-section" data-admin-section="points">
+                    <div class="admin-card">
+                        <div class="admin-card-title">إعدادات النقاط</div>
+                        <div class="points-config">
+                            <div class="point-setting">
+                                <label>نقاط الإجابة الصحيحة</label>
+                                <input type="number" id="pts-correct" value="10">
+                            </div>
+                            <div class="point-setting">
+                                <label>مضاعف السرعة</label>
+                                <input type="number" id="pts-speed" value="5">
+                            </div>
+                            <div class="point-setting">
+                                <label>نقاط البازل</label>
+                                <input type="number" id="pts-puzzle" value="50">
+                            </div>
+                            <div class="point-setting">
+                                <label>نقاط المنطقة</label>
+                                <input type="number" id="pts-region" value="30">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-full" id="save-points" style="margin-top:16px;">💾 حفظ</button>
+                    </div>
+                </div>
+
+                <!-- Competitions -->
+                <div class="admin-section" data-admin-section="competitions">
+                    <div class="admin-card">
+                        <div class="admin-card-title">🏆 إنشاء مسابقة</div>
+                        <div class="comp-form" style="display:flex; flex-direction:column; gap:10px;">
+                            <input type="text" class="input-field" id="comp-name-input" placeholder="اسم المسابقة">
+                            <input type="text" class="input-field" id="comp-prize-input" placeholder="الجائزة 🏆">
+                            <textarea class="input-field" id="comp-desc-input" rows="2"
+                                placeholder="وصف المسابقة (اختياري)"></textarea>
+
+                            <div style="display:flex; gap:8px;">
+                                <div style="flex:1;">
+                                    <label
+                                        style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:4px;">تاريخ
+                                        الانتهاء</label>
+                                    <input type="date" class="input-field" id="comp-end-date" style="direction:ltr;">
+                                </div>
+                                <div style="flex:1;">
+                                    <label
+                                        style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:4px;">عدد
+                                        الأسئلة</label>
+                                    <input type="number" class="input-field" id="comp-question-count" min="1" max="50"
+                                        value="10" placeholder="10">
+                                </div>
+                            </div>
+
+                            <!-- Game Type Selection (multi-select) -->
+                            <div style="background:rgba(0,0,0,0.1); border-radius:12px; padding:12px;">
+                                <label
+                                    style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:8px; font-weight:700;">🎮
+                                    اختر الألعاب</label>
+                                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                    <label
+                                        style="display:flex; align-items:center; gap:4px; cursor:pointer; background:rgba(255,255,255,0.1); padding:6px 12px; border-radius:20px; font-size:var(--fs-xs);">
+                                        <input type="checkbox" id="comp-game-quiz" value="quiz" checked
+                                            onchange="document.getElementById('comp-quiz-time-container').style.display = this.checked ? 'block' : 'none'">
+                                        ❓ الأسئلة
+                                    </label>
+                                    <label
+                                        style="display:flex; align-items:center; gap:4px; cursor:pointer; background:rgba(255,255,255,0.1); padding:6px 12px; border-radius:20px; font-size:var(--fs-xs);">
+                                        <input type="checkbox" id="comp-game-puzzle" value="puzzle"
+                                            onchange="const d = this.checked ? 'block' : 'none'; document.getElementById('comp-puzzle-level').style.display = d; document.getElementById('comp-puzzle-time-container').style.display = d;">
+                                        🧩 البازل
+                                    </label>
+                                    <select id="comp-puzzle-level" class="input-field"
+                                        style="height:32px; padding:0 8px; font-size:var(--fs-xs); border-radius:12px; display:none; width:auto;">
+                                        <option value="easy">سهل (Jigsaw Puzzle)</option>
+                                        <option value="hard">صعب (Slide Puzzle)</option>
+                                    </select>
+                                    <div id="comp-puzzle-time-container"
+                                        style="display:none; width:100%; margin-top:8px;">
+                                        <label
+                                            style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:4px;">وقت
+                                            البازل بالثواني (اختياري)</label>
+                                        <input type="number" id="comp-puzzle-time" class="input-field"
+                                            placeholder="مثلاً: 60" min="10">
+                                    </div>
+                                    <div id="comp-quiz-time-container" style="width:100%; margin-top:8px;">
+                                        <label
+                                            style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:4px;">وقت
+                                            سؤال الأسئلة بالثواني (اختياري)</label>
+                                        <input type="number" id="comp-quiz-time" class="input-field"
+                                            placeholder="مثلاً: 15" min="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Competition Question Source -->
+                            <div style="background:rgba(0,0,0,0.1); border-radius:12px; padding:12px;">
+                                <label
+                                    style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:8px; font-weight:700;">📝
+                                    مصدر الأسئلة</label>
+                                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+                                    <label
+                                        style="display:flex; align-items:center; gap:4px; cursor:pointer; background:rgba(255,255,255,0.1); padding:6px 12px; border-radius:20px; font-size:var(--fs-xs);">
+                                        <input type="radio" name="comp-q-source" value="existing" checked> أسئلة اللعبة
+                                    </label>
+                                    <label
+                                        style="display:flex; align-items:center; gap:4px; cursor:pointer; background:rgba(255,255,255,0.1); padding:6px 12px; border-radius:20px; font-size:var(--fs-xs);">
+                                        <input type="radio" name="comp-q-source" value="custom"> أسئلة مخصصة
+                                    </label>
+                                </div>
+                                <div id="comp-custom-questions"
+                                    style="display:none; margin-top:12px; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; background:rgba(0,0,0,0.1);">
+                                    <div style="font-weight:700; color:var(--text-primary); margin-bottom:8px;">إضافة
+                                        سؤال مخصص للمسابقة</div>
+                                    <input type="text" id="comp-q-text" class="input-field" placeholder="نص السؤال"
+                                        style="margin-bottom:8px;">
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                        <input type="text" id="comp-q-opt0" class="input-field"
+                                            placeholder="الخيار الأول">
+                                        <input type="text" id="comp-q-opt1" class="input-field"
+                                            placeholder="الخيار الثاني">
+                                        <input type="text" id="comp-q-opt2" class="input-field"
+                                            placeholder="الخيار الثالث">
+                                        <input type="text" id="comp-q-opt3" class="input-field"
+                                            placeholder="الخيار الرابع">
+                                    </div>
+                                    <div style="margin-top:8px;">
+                                        <label style="font-size:var(--fs-xs); color:var(--text-secondary);">الإجابة
+                                            الصحيحة:</label>
+                                        <select id="comp-q-correct" class="input-field" style="margin-top:4px;">
+                                            <option value="0">الخيار الأول</option>
+                                            <option value="1">الخيار الثاني</option>
+                                            <option value="2">الخيار الثالث</option>
+                                            <option value="3">الخيار الرابع</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" id="comp-add-q-btn" class="btn btn-glass"
+                                        style="margin-top:8px; width:100%; border-radius:12px; font-weight:700; background:rgba(46,204,113,0.2); color:#2ecc71;">+
+                                        إضافة السؤال للمسابقة</button>
+
+                                    <div id="comp-added-questions-list"
+                                        style="margin-top:12px; display:flex; flex-direction:column; gap:4px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Social Media Tasks -->
+                            <div style="background:rgba(0,0,0,0.1); border-radius:12px; padding:12px;">
+                                <label
+                                    style="font-size:var(--fs-xs); color:var(--text-secondary); display:block; margin-bottom:8px; font-weight:700;">📱
+                                    مهام اجتماعية (اختياري)</label>
+                                <div id="comp-social-tasks" style="display:flex; flex-direction:column; gap:8px;"></div>
+                                <button type="button" class="btn btn-glass" id="add-social-task-btn"
+                                    style="font-size:var(--fs-xs); padding:6px 12px; margin-top:6px; width:100%;">+
+                                    إضافة مهمة اجتماعية</button>
+                            </div>
+
+                            <!-- Share Game Task -->
+                            <div style="background:rgba(0,0,0,0.1); border-radius:12px; padding:12px;">
+                                <label
+                                    style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:var(--fs-xs); color:var(--text-secondary); font-weight:700;">
+                                    <input type="checkbox" id="comp-share-enabled"> 🔗 مهمة مشاركة اللعبة
+                                </label>
+                                <div id="comp-share-fields"
+                                    style="display:none; margin-top:8px; display:flex; flex-direction:column; gap:6px;">
+                                    <input type="text" class="input-field" id="comp-share-url"
+                                        placeholder="رابط المشاركة">
+                                    <input type="number" class="input-field" id="comp-share-count" min="1" max="100"
+                                        value="5" placeholder="عدد الأشخاص المطلوب">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary w-full" id="create-comp">🏆 إنشاء مسابقة</button>
+                        </div>
+
+                        <!-- Competition Dashboard -->
+                        <div style="margin-top:16px;">
+                            <h4 style="color:var(--text-primary); font-weight:700; margin-bottom:12px;">📊 المسابقات
+                                الحالية</h4>
+                            <div class="comp-list" id="comp-list"></div>
+                        </div>
+
+                        <!-- Competition Details Modal (inline) -->
+                        <div id="comp-details-panel" style="display:none; margin-top:16px;">
+                            <div class="admin-card" style="border:2px solid rgba(255,215,0,0.4);">
+                                <div class="admin-card-title" id="comp-details-title">تفاصيل المسابقة</div>
+                                <div id="comp-participants-list" style="display:flex; flex-direction:column; gap:8px;">
+                                </div>
+                                <div style="display:flex; gap:8px; margin-top:12px;">
+                                    <input type="text" class="input-field" id="comp-search-input"
+                                        placeholder="🔍 بحث عن طالب..." style="flex:1;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Store Settings -->
+                <div class="admin-section" data-admin-section="store">
+                    <div class="admin-card"
+                        style="border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.15);">
+                        <div class="admin-card-title"
+                            style="display:flex; justify-content:space-between; align-items:center;">
+                            إدارة المتجر
+                            <button class="btn btn-primary"
+                                onclick="document.getElementById('add-store-modal').style.display='flex'"
+                                style="padding:6px 12px; font-size:var(--fs-xs);">+ إضافة منتج</button>
+                        </div>
+                        <div style="margin-top:16px;">
+                            <div class="comp-list" id="store-admin-list"
+                                style="display:flex; flex-direction:column; gap:8px; max-height:60vh; overflow-y:auto; padding-right:4px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Store Item Modal -->
+                <div id="add-store-modal"
+                    style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+                    <div class="admin-card"
+                        style="width:90%; max-width:400px; max-height:90vh; overflow-y:auto; border:2px solid rgba(255,215,0,0.3);">
+                        <div class="admin-card-title" id="store-modal-title">إضافة أفاتار أو منتج جديد</div>
+                        <input type="hidden" id="edit-store-id" value="">
+
+                        <div class="comp-form">
+                            <label style="font-size:0.75rem; color:var(--text-secondary);">نوع المنتج:</label>
+                            <select class="input-field" id="store-item-type" style="margin-bottom:8px;">
+                                <option value="avatar">🎭 أفاتار (تغيير شخصية)</option>
+                                <option value="powerup">⚡ قدرة خارقة</option>
+                                <option value="other">🎁 أخرى</option>
+                            </select>
+
+                            <input type="text" class="input-field" id="store-item-name"
+                                placeholder="اسم المنتج (مثال: نينجا الظلام)" style="margin-bottom:8px;">
+
+                            <div style="display:flex; gap:8px; margin-bottom:8px;">
+                                <div style="flex:1;">
+                                    <label style="font-size:0.75rem; color:var(--text-secondary);">السعر (⭐):</label>
+                                    <input type="number" class="input-field" id="store-item-price"
+                                        placeholder="مثال: 500">
+                                </div>
+                                <div style="flex:1;">
+                                    <label style="font-size:0.75rem; color:var(--text-secondary);">الندرة:</label>
+                                    <select class="input-field" id="store-item-rarity">
+                                        <option value="common">عادي</option>
+                                        <option value="rare">نادر 💎</option>
+                                        <option value="epic">أسطوري ✨</option>
+                                        <option value="legendary">خرافي 🔥</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <label style="font-size:0.75rem; color:var(--text-secondary);">الأيقونة أو الإيموجي:</label>
+                            <input type="text" class="input-field" id="store-item-icon"
+                                placeholder="مثال: 🥷 أو رابط صورة" style="margin-bottom:8px;">
+
+                            <label style="font-size:0.75rem; color:var(--text-secondary);">صورة من جهازك
+                                (اختياري):</label>
+                            <input type="file" id="store-item-upload" accept="image/*" class="input-field"
+                                style="padding:4px; margin-bottom:8px;">
+
+                            <label style="font-size:0.75rem; color:var(--text-secondary);">الوصف:</label>
+                            <textarea class="input-field" id="store-item-desc" rows="2" placeholder="وصف المنتج..."
+                                style="margin-bottom:12px;"></textarea>
+
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-primary" id="save-store-item" style="flex:2;">💾 حفظ</button>
+                                <button class="btn btn-danger"
+                                    onclick="document.getElementById('add-store-modal').style.display='none'"
+                                    style="flex:1;">إلغاء</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Import/Export -->
+                <div class="admin-section" data-admin-section="import">
+                    <div class="admin-card">
+                        <div class="admin-card-title">استيراد / تصدير البيانات</div>
+                        <div class="json-import-area">
+                            <h4 style="margin-bottom:8px; color:var(--text-primary); font-weight:700;">استيراد JSON</h4>
+                            <p style="font-size:var(--fs-xs); color:var(--text-secondary); margin-bottom:12px;">الصق
+                                بيانات JSON لاستيراد الأسئلة بالجملة</p>
+                            <textarea id="json-import-text"
+                                placeholder='[{"question":"...","options":["أ","ب","ج","د"],"correct":0,"category":"general"}]'></textarea>
+                            <button class="btn btn-primary w-full" id="import-json-btn" style="margin-top:12px;">📥
+                                استيراد</button>
+                        </div>
+                        <div style="margin-top:16px; text-align:center;">
+                            <button class="btn btn-glass" id="export-json-btn">📤 تصدير جميع البيانات</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div class="admin-section" data-admin-section="settings">
+                    <div class="admin-card">
+                        <div class="admin-card-title">تغيير كلمة المرور</div>
+                        <div class="password-change">
+                            <input type="password" class="input-field" id="new-password"
+                                placeholder="كلمة المرور الجديدة">
+                            <input type="password" class="input-field" id="confirm-password"
+                                placeholder="تأكيد كلمة المرور">
+                            <button class="btn btn-primary" id="change-password">حفظ</button>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="admin-card-title">إعادة تعيين البيانات</div>
+                        <p style="font-size:var(--fs-sm); color:var(--text-secondary); margin-bottom:12px;">⚠️ سيتم حذف
+                            جميع البيانات وإعادتها للافتراضية</p>
+                        <button class="btn btn-danger" id="reset-data">🗑️ إعادة تعيين</button>
+                    </div>
+                </div>
+
+                <!-- Users Management -->
+                <div class="admin-section" data-admin-section="users">
+                    <div class="admin-card">
+                        <div class="admin-card-title">👥 إدارة المستخدمين</div>
+                        <p style="font-size:var(--fs-sm); color:var(--text-secondary); margin-bottom:16px;">
+                            عرض وإدارة جميع اللاعبين المسجلين في لوحة المتصدرين
+                        </p>
+                        <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+                            <button class="btn btn-glass" id="admin-refresh-users" style="font-size:var(--fs-sm);">🔄
+                                تحديث القائمة</button>
+                            <button class="btn btn-danger" id="admin-clear-all-users"
+                                style="font-size:var(--fs-sm);">🗑️ حذف الكل</button>
+                        </div>
+                        <div id="admin-users-count"
+                            style="font-size:var(--fs-sm); color:var(--accent-primary); font-weight:700; margin-bottom:12px;">
+                        </div>
+                        <div id="admin-users-list"
+                            style="display:flex; flex-direction:column; gap:8px; max-height:50vh; overflow-y:auto;">
+                            <!-- Filled dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dev / Developer Management -->
+                <div class="admin-section" data-admin-section="dev">
+                    <div class="admin-card" style="border: 2px solid #d9534f;">
+                        <div class="admin-card-title">
+                            <span style="color:#d9534f;">🔒 لوحة المطور الخاصة</span>
+                        </div>
+                        <p style="color:var(--text-secondary); font-size:var(--fs-sm); margin-bottom:16px;">
+                            تنبيه: هذه الإعدادات مخصصة لرفع تصميمات وشخصيات اللعبة المخصصة.
+                        </p>
+
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(217, 83, 79, 0.05); border:1px solid rgba(217, 83, 79, 0.2);">
+                            <h4 style="color:var(--text-heading); font-size:var(--fs-sm); margin-bottom:12px;">وضعيات
+                                شخصية عزام (Azzam)</h4>
+                            <div style="display:grid; grid-template-columns:1fr; gap:12px;">
+                                <div><label style="font-size:var(--fs-xs);">ترحيب (Welcome)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="welcome"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">ثابت (Idle)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="idle" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">سعيد/متحمس (Happy)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="happy"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">يفكر (Thinking)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="thinking"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">يتحدث (Talking)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="talking"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">حزين/مخطئ (Sad)</label><input type="file"
+                                        class="dev-character-upload" data-char="azzam" data-pose="sad" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(217, 83, 79, 0.05); border:1px solid rgba(217, 83, 79, 0.2);">
+                            <h4 style="color:var(--text-heading); font-size:var(--fs-sm); margin-bottom:12px;">وضعيات
+                                شخصية الجادل (Jadel)</h4>
+                            <div style="display:grid; grid-template-columns:1fr; gap:12px;">
+                                <div><label style="font-size:var(--fs-xs);">ترحيب (Welcome)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="welcome"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">ثابت (Idle)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="idle" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">سعيد/متحمس (Happy)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="happy"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">يفكر (Thinking)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="thinking"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">يتحدث (Talking)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="talking"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">حزين/مخطئ (Sad)</label><input type="file"
+                                        class="dev-character-upload" data-char="jadel" data-pose="sad" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                            </div>
+                        </div>
+
+
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(217, 83, 79, 0.05); border:1px solid rgba(217, 83, 79, 0.2);">
+                            <h4 style="color:var(--text-heading); font-size:var(--fs-sm); margin-bottom:12px;">أيقونات
+                                اللعبة الأساسية والـ UI <span style="font-size:10px;color:gray;">يفضل أبعاد
+                                    100x100</span></h4>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                <div><label style="font-size:var(--fs-xs);">شعار اللعبة (Logo)</label><input type="file"
+                                        class="dev-icon-upload" data-icon="logo" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة الأسئلة</label><input type="file"
+                                        class="dev-icon-upload" data-icon="quiz" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة البازل</label><input type="file"
+                                        class="dev-icon-upload" data-icon="puzzle" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة الخريطة</label><input type="file"
+                                        class="dev-icon-upload" data-icon="map" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة المتجر</label><input type="file"
+                                        class="dev-icon-upload" data-icon="ui_store" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة الإعدادات</label><input type="file"
+                                        class="dev-icon-upload" data-icon="ui_settings" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة المتصدرين</label><input type="file"
+                                        class="dev-icon-upload" data-icon="ui_leaderboard" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أيقونة العملة (النجمة)</label><input
+                                        type="file" class="dev-icon-upload" data-icon="ui_currency" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div style="grid-column: span 2;"><label style="font-size:var(--fs-xs);">خلفية المتجر
+                                        (صورة)</label><input type="file" class="dev-icon-upload" data-icon="bg_store"
+                                        accept="image/*" style="font-size:var(--fs-xs); width:100%;"></div>
+                            </div>
+                        </div>
+
+                        <div
+                            style="margin-bottom:16px; padding:12px; border-radius:12px; background:rgba(217, 83, 79, 0.05); border:1px solid rgba(217, 83, 79, 0.2);">
+                            <h4 style="color:var(--text-heading); font-size:var(--fs-sm); margin-bottom:12px;">صور
+                                الأفاتار (بديلة للايموجي)</h4>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 1</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="0" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 2</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="1" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 3</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="2" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 4</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="3" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 5</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="4" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 6</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="5" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 7</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="6" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                                <div><label style="font-size:var(--fs-xs);">أفاتار 8</label><input type="file"
+                                        class="dev-avatar-upload" data-avatar="7" accept="image/*"
+                                        style="font-size:var(--fs-xs); width:100%;"></div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-full" id="save-dev-settings" style="margin-top:12px;">💾 حفظ
+                            إعدادات المطور</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+       NAME INPUT MODAL — Redesigned
+       ═══════════════════════════════════════ -->
+        <div class="modal-overlay" id="name-modal">
+            <div class="name-modal-card">
+                <!-- Character floating above card -->
+                <div class="name-modal-character-wrap">
+                    <img class="name-modal-character" src="assets/char/وضعيات الشخصيات بدون خلفية/1.png" alt="شخصية">
+                    <div class="name-modal-char-glow"></div>
+                </div>
+                <!-- Card Content -->
+                <div class="name-modal-body">
+                    <h3 class="name-modal-title">أهلاً! ما اسمك؟</h3>
+
+                    <!-- Avatar Picker -->
+                    <div class="name-modal-section-label">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Artist%20Palette.png"
+                            style="width:18px;height:18px;display:inline;vertical-align:middle;" alt=""> اختر أفاتارك
+                    </div>
+                    <div class="emoji-picker" id="emoji-picker">
+                        <button class="emoji-option" data-emoji="🦅">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Eagle.png"
+                                alt="نسر">
+                        </button>
+                        <button class="emoji-option" data-emoji="🦁">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Lion.png"
+                                alt="أسد">
+                        </button>
+                        <button class="emoji-option selected" data-emoji="⭐">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png"
+                                alt="نجمة"
+                                onerror="this.src='https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png'">
+                        </button>
+                        <button class="emoji-option" data-emoji="👦">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Boy.png"
+                                alt="ولد">
+                        </button>
+                        <button class="emoji-option" data-emoji="👧">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Girl.png"
+                                alt="بنت">
+                        </button>
+                        <button class="emoji-option" data-emoji="🐪">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Camel.png"
+                                alt="جمل">
+                        </button>
+                        <button class="emoji-option" data-emoji="🌟">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Shooting%20Star.png"
+                                alt="نجمة مضيئة">
+                        </button>
+                        <button class="emoji-option" data-emoji="🧒">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Child.png"
+                                alt="طفل">
+                        </button>
+                    </div>
+
+                    <!-- Name Input -->
+                    <div class="name-modal-section-label">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pencil.png"
+                            style="width:18px;height:18px;display:inline;vertical-align:middle;" alt=""> اكتب اسمك
+                    </div>
+                    <div class="name-input-wrap">
+                        <input type="text" class="input-field name-modal-input" id="player-name-input"
+                            placeholder="اكتب اسمك هنا..." maxlength="20">
+                    </div>
+
+                    <!-- Referral Code BEFORE start button -->
+                    <div id="referral-code-section" class="referral-section">
+                        <div class="referral-section-label">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Trophy.png"
+                                style="width:18px;height:18px;display:inline;vertical-align:middle;" alt=""> هل لديك كود
+                            دعوة من صديق؟
+                        </div>
+                        <input type="text" id="referral-code-input" class="input-field referral-input"
+                            placeholder="أدخل كود الدعوة (اختياري)">
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn btn-primary w-full name-modal-start-btn" id="save-name-btn">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png"
+                            style="width:28px;height:28px;display:inline;vertical-align:middle;" alt="صاروخ">
+                        يلا نبدأ!
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+       ADD QUESTION MODAL
+       ═══════════════════════════════════════ -->
+        <div class="modal-overlay" id="question-modal">
+            <div class="modal">
+                <h3 class="modal-title" id="q-modal-title">إضافة سؤال</h3>
+                <div class="add-form">
+                    <div>
+                        <label>السؤال</label>
+                        <textarea class="input-field" id="q-text" rows="2" placeholder="اكتب السؤال"></textarea>
+                    </div>
+                    <div>
+                        <label>صورة السؤال (اختياري)</label>
+                        <input type="file" accept="image/*" id="q-image-upload" style="display:none;">
+                        <input type="hidden" id="q-image" value="">
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <button type="button" class="btn btn-glass" id="q-image-btn"
+                                style="font-size:var(--fs-sm); padding:8px 16px;"
+                                onclick="document.getElementById('q-image-upload').click()">📸 رفع صورة</button>
+                            <button type="button" class="btn btn-glass" id="q-image-clear"
+                                style="font-size:var(--fs-sm); padding:8px 12px; display:none;"
+                                onclick="document.getElementById('q-image').value='';document.getElementById('q-image-preview').style.display='none';this.style.display='none';">✖
+                                إزالة</button>
+                        </div>
+                        <img id="q-image-preview"
+                            style="display:none; max-width:100%; max-height:150px; border-radius:8px; margin-top:8px; border:2px solid var(--border-color);">
+                    </div>
+                    <div>
+                        <label>الخيارات</label>
+                        <div class="option-inputs">
+                            <input type="text" class="input-field" id="q-opt-0" placeholder="الخيار ١">
+                            <input type="text" class="input-field" id="q-opt-1" placeholder="الخيار ٢">
+                            <input type="text" class="input-field" id="q-opt-2" placeholder="الخيار ٣">
+                            <input type="text" class="input-field" id="q-opt-3" placeholder="الخيار ٤">
+                        </div>
+                    </div>
+                    <div>
+                        <label>الإجابة الصحيحة</label>
+                        <div class="correct-option-select" id="correct-select">
+                            <button class="correct-opt selected" data-correct="0">١</button>
+                            <button class="correct-opt" data-correct="1">٢</button>
+                            <button class="correct-opt" data-correct="2">٣</button>
+                            <button class="correct-opt" data-correct="3">٤</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label>تلميح (اختياري)</label>
+                        <input type="text" class="input-field" id="q-hint" placeholder="تلميح للاعب">
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-primary" id="save-question" style="flex:1;">💾 حفظ</button>
+                        <button class="btn btn-glass" id="cancel-question">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+       DAILY QUESTION MODAL
+       ═══════════════════════════════════════ -->
+        <div class="modal-overlay" id="daily-q-modal">
+            <div class="modal" style="max-width:420px;">
+                <div style="text-align:center; margin-bottom:16px;">
+                    <div style="font-size:2.5rem; margin-bottom:8px;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png"
+                            class="ui-anim-icon" style="width:2.5em;height:2.5em;">
+                    </div>
+                    <h3 class="modal-title" style="color:#FF9800;">سؤال اليوم</h3>
+                    <p style="font-size:var(--fs-xs); color:var(--text-secondary);">الإجابة الصحيحة = نقاط مضاعفة ×2!
+                    </p>
+                </div>
+                <div id="daily-q-text"
+                    style="font-size:var(--fs-lg); font-weight:800; color:var(--text-primary); text-align:center; margin-bottom:20px; line-height:1.6; padding:16px; border-radius:12px; background:rgba(155,89,182,0.08); border:1px solid rgba(155,89,182,0.2);">
+                </div>
+                <div id="daily-q-options"
+                    style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+                </div>
+                <div id="daily-q-result" class="hidden"
+                    style="text-align:center; padding:16px; border-radius:12px; margin-bottom:12px;">
+                </div>
+                <button class="btn btn-glass w-full hidden" id="daily-q-close" style="margin-top:8px;">إغلاق</button>
+            </div>
+        </div>
+
+        <!-- Toast container -->
+        <div class="toast" id="toast"></div>
+
+    </div>
+
+    <script src="js/data.js?v=20260521_v4"></script>
+    <script src="js/audio.js?v=20260521_v4"></script>
+    <script src="js/effects.js?v=20260521_v4"></script>
+    <script src="js/quiz.js?v=20260521_v4"></script>
+    <script src="js/firebase-db.js?v=20260521_v4" type="module"></script>
+    <script src="js/app.js?v=20260521_v4"></script>
+    <script src="js/puzzle.js?v=20260521_v4"></script>
+    <script src="js/map.js?v=20260521_v4"></script>
+    <script src="js/leaderboard.js?v=20260521_v4"></script>
+    <script src="js/admin.js?v=20260521_v4"></script>
+    <script src="js/dialogue.js?v=20260521_v4"></script>
+    <script src="js/chat.js?v=20260521_v4"></script>
+    <script src="js/inventory.js?v=20260521_v4"></script>
+    <!-- ═══════════════════════════════════════
+       USER SETTINGS MODAL
+       ═══════════════════════════════════════ -->
+    <div class="modal-overlay" id="user-settings-modal">
+        <div class="modal"
+            style="max-width:400px; padding:0; overflow:hidden; border-radius:24px; max-height:90vh; display:flex; flex-direction:column;">
+            <!-- Header -->
+            <div id="user-settings-header" style="
+                background: linear-gradient(135deg, rgba(155,89,182,0.3), rgba(253,203,110,0.2));
+                padding: 20px 24px 16px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                display: flex; align-items: center; gap: 14px; position: relative;">
+                <div style="font-size:2.4rem;">
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png"
+                        class="ui-anim-icon" style="width:2.4em;height:2.4em; animation: none!important;">
+                </div>
+                <div>
+                    <h3 style="font-size:1.2rem; font-weight:900; color:var(--text-heading); margin:0;">إعداداتي</h3>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin:0;">خصّص تجربتك في اللعبة</p>
+                </div>
+                <button id="close-user-settings" style="
+                    position:absolute; left:16px; top:16px; width:32px; height:32px;
+                    border-radius:50%; background:rgba(255,255,255,0.1); border:none;
+                    color:var(--text-primary); font-size:1.1rem; cursor:pointer;
+                    display:flex; align-items:center; justify-content:center;">✕</button>
+            </div>
+            <!-- Body -->
+            <div
+                style="padding:16px 20px 24px; display:flex; flex-direction:column; gap:14px; max-height:60vh; overflow-y:auto; -webkit-overflow-scrolling:touch;">
+
+                <!-- Avatar display -->
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                    <div id="settings-avatar-display" style="
+                        width:70px; height:70px; border-radius:50%;
+                        background: linear-gradient(135deg, rgba(155,89,182,0.3), rgba(253,203,110,0.3));
+                        border: 3px solid var(--card-border);
+                        display:flex; align-items:center; justify-content:center;
+                        font-size:2.5rem; overflow:hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.2);">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Star-Struck.png"
+                            class="ui-anim-icon" style="width:55px;height:55px;" id="settings-avatar-img">
+                    </div>
+                    <div id="settings-player-name-badge" style="
+                        font-weight:900; font-size:1rem; color:var(--text-heading);
+                        background: rgba(255,215,0,0.15); padding:4px 16px; border-radius:20px;">
+                        اللاعب
+                    </div>
+                </div>
+
+                <!-- Change Name -->
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <label style="font-weight:800; color:var(--text-secondary); font-size:0.85rem;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pencil.png"
+                            class="ui-anim-icon" style="width:1.1em;height:1.1em;display:inline;">
+                        تغيير الاسم
+                    </label>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <input type="text" id="settings-name-input" class="input-field" placeholder="أدخل اسمك..."
+                            maxlength="20" style="flex:1; padding:10px 14px; font-size:0.95rem; border-radius:12px;">
+                        <button id="settings-save-name" style="
+                            padding:10px 18px; border-radius:12px; border:none;
+                            background: linear-gradient(135deg, #FFD700, #F59E0B);
+                            color:#4A2800; font-weight:900; cursor:pointer; font-size:0.9rem;
+                            font-family:inherit; transition:all 0.2s; flex-shrink:0;">حفظ</button>
+                    </div>
+                </div>
+
+                <!-- Select Avatar Frame -->
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <label style="font-weight:800; color:var(--text-secondary); font-size:0.85rem;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Artist%20Palette.png"
+                            class="ui-anim-icon" style="width:1.1em;height:1.1em;display:inline;">
+                        صورة الملف الشخصي
+                    </label>
+                    <div id="settings-avatar-grid" style="
+                        display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;
+                        max-height:100px; overflow-y:auto; padding:4px;">
+                        <!-- Filled dynamically by JS -->
+                        <div
+                            style="text-align:center; color:var(--text-secondary); font-size:0.8rem; grid-column:1/-1; padding:16px;">
+                            اشترِ items من المتجر لتظهر هنا!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volume Control -->
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <label style="font-weight:800; color:var(--text-secondary); font-size:0.85rem;">
+                        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Speaker%20High%20Volume.png"
+                            class="ui-anim-icon" id="settings-volume-icon"
+                            style="width:1.2em;height:1.2em;display:inline;">
+                        التحكم في الصوت
+                    </label>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <button id="settings-mute-btn" style="
+                            width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+                            background: linear-gradient(145deg, #f5c842, #e8a020);
+                            display:flex; align-items:center; justify-content:center;
+                            box-shadow: 0 3px 10px rgba(228,160,32,0.4); flex-shrink:0; transition:all 0.2s;">
+                            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Speaker%20High%20Volume.png"
+                                class="ui-anim-icon" id="settings-mute-icon"
+                                style="width:22px;height:22px;animation:none!important;">
+                        </button>
+                        <input type="range" id="settings-volume-slider" min="0" max="100" value="80" style="
+                            flex:1; height:8px; border-radius:4px; cursor:pointer;
+                            accent-color: #FFD700; background: rgba(255,255,255,0.15);">
+                        <span id="settings-volume-val"
+                            style="font-weight:900; color:var(--text-heading); font-size:0.9rem; min-width:36px; text-align:center;">80%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notification Inbox Modal -->
+    <div id="notifications-modal"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:1000; overflow-y:auto;">
+        <div style="max-width:500px; margin:5vh auto; padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                <h2
+                    style="font-weight:900; color:var(--text-heading); font-size:1.3rem; display:flex; align-items:center; gap:8px;">
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bell.png"
+                        style="width:28px;height:28px;"> صندوق الإشعارات
+                </h2>
+                <button onclick="document.getElementById('notifications-modal').style.display='none'"
+                    style="background:rgba(255,255,255,0.1); border:none; color:white; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer;">✕</button>
+            </div>
+            <div id="notif-inbox-list" class="notif-inbox">
+                <p style="text-align:center; color:var(--text-secondary); padding:40px 0;">لا توجد إشعارات حالياً
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="js/celebration.js?v=20260521_v3"></script>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+/* ============================================
+   HAWDAJ GAME — Powerup Inventory Bar
+   Floating bar at bottom of game screens
+   ============================================ */
+
+.powerup-inventory {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(20, 10, 50, 0.92), rgba(40, 20, 80, 0.88));
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 900;
+    animation: slideUpInventory 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    max-width: 95vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.powerup-inventory::-webkit-scrollbar {
+    display: none;
+}
+
+.powerup-inventory.hidden {
+    display: none;
+}
+
+@keyframes slideUpInventory {
+    from {
+        transform: translateX(-50%) translateY(80px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+.powerup-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 8px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    min-width: 52px;
+}
+
+.powerup-slot:hover {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.2);
+}
+
+.powerup-slot:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.powerup-slot.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: grayscale(1);
+}
+
+.powerup-slot.used {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.powerup-slot .slot-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.powerup-slot .slot-name {
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.powerup-slot .slot-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: linear-gradient(135deg, #FFD700, #FF8C00);
+    color: #3d1f00;
+    font-size: 0.55rem;
+    font-weight: 900;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(255, 140, 0, 0.4);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Active powerup glow */
+.powerup-slot.active-powerup {
+    background: rgba(46, 204, 113, 0.2);
+    border-color: rgba(46, 204, 113, 0.6);
+    animation: powerupGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes powerupGlow {
+    from {
+        box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+    }
+
+    to {
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
+    }
+}
+
+/* Inventory label */
+.powerup-inventory .inv-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.55rem;
+    font-weight: 900;
+    color: rgba(255, 215, 0, 0.7);
+    writing-mode: vertical-rl;
+    letter-spacing: 1px;
+    padding: 0 2px;
+}
+
+/* Empty state */
+.powerup-inventory .inv-empty {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 4px 12px;
+    white-space: nowrap;
+}
+
+/* Toast notification for powerup use */
+.powerup-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.95), rgba(39, 174, 96, 0.95));
+    color: white;
+    padding: 16px 28px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 1rem;
+    z-index: 9999;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    animation: powerupToastAnim 1.2s ease forwards;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes powerupToastAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .powerup-inventory {
+        gap: 5px;
+        padding: 6px 10px;
+        bottom: 8px;
+    }
+
+    .powerup-slot {
+        min-width: 44px;
+        padding: 4px 6px;
+    }
+
+    .powerup-slot .slot-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .powerup-slot .slot-name {
+        font-size: 0.45rem;
+    }
+}

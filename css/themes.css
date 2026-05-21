@@ -1,0 +1,495 @@
+/* ==================================================
+   HAWDAJ GAME —  Saudi Kingdom Theme 
+   A premium 3D cartoon design system for children
+   ================================================== */
+
+/* --- Design Tokens --- */
+body {
+  --emerald: #0B6E4F;
+  --emerald-dark: #073B30;
+  --emerald-light: #A8E6CF;
+  --emerald-mist: #E0F5EC;
+
+  --gold: #F4A623;
+  --gold-dark: #C17B1A;
+  --gold-light: #FFE082;
+  --gold-glow: rgba(244, 166, 35, 0.35);
+
+  --cream: #FFFEF7;
+  --sand: #FFF3E0;
+  --blush: #FFF8F0;
+
+  --ink: #1A2E2A;
+  --ink-soft: #3D6B5E;
+  --ink-muted: #6B9E8E;
+
+  --success: #2DC653;
+  --success-dark: #1B8A3A;
+  --danger: #E63946;
+  --danger-dark: #B71C2A;
+  --warning: #FBBF24;
+
+  /* Map to existing CSS variable names for compatibility */
+  --bg-primary: var(--cream);
+  --bg-secondary: var(--sand);
+  --bg-card: rgba(255, 255, 255, 0.97);
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-soft);
+  --text-heading: var(--emerald);
+
+  --accent-primary: var(--emerald);
+  --accent-secondary: var(--gold);
+  --accent-tertiary: var(--gold-dark);
+
+  --card-bg: rgba(255, 255, 255, 0.97);
+  --card-border: var(--emerald);
+
+  --border-color: rgba(11, 110, 79, 0.2);
+  --border-accent: var(--gold);
+
+  --input-bg: #FFFFFF;
+  --input-border: var(--emerald);
+
+  --correct-color: var(--success);
+  --wrong-color: var(--danger);
+  --warning-color: var(--warning);
+
+  --overlay-bg: rgba(255, 254, 247, 0.92);
+  --saudi-green: var(--emerald);
+}
+
+/* --- Global Overlay (soft warm glow over background) --- */
+body .global-overlay {
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    rgba(255, 254, 247, 0.3) 0%,
+    rgba(168, 230, 207, 0.08) 60%,
+    transparent 100%
+  );
+}
+
+/* --- Hide Ramadan / Show Normal --- */
+body .ramadan-decor { display: none !important; }
+body .normal-decor  { display: block !important; }
+
+/* --- Smooth Theme Transition --- */
+body { transition: background-color 0.6s ease; }
+
+
+/* ==================================================
+    GLASS PANEL — The foundational card style
+   ================================================== */
+.glass-panel {
+  background: var(--cream) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 4.5px solid var(--emerald) !important;
+  box-shadow:
+    0 8px 0 var(--emerald-dark),
+    0 14px 28px rgba(7, 59, 48, 0.12) !important;
+  border-radius: 28px !important;
+  color: var(--ink) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inner gold accent line */
+.glass-panel::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 2px dashed var(--gold);
+  border-radius: 22px;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+
+/* ==================================================
+    BUTTONS — 3D Pop Cartoon Style
+   ================================================== */
+
+/* Primary CTA (Gold) */
+body .btn-primary {
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%) !important;
+  color: #4A2800 !important;
+  border: 4px solid var(--gold-dark) !important;
+  border-radius: 22px !important;
+  box-shadow:
+    0 7px 0 var(--gold-dark),
+    0 10px 20px rgba(193, 123, 26, 0.25) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4) !important;
+  font-weight: 900 !important;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.12s ease !important;
+}
+body .btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 9px 0 var(--gold-dark),
+    0 14px 25px rgba(193, 123, 26, 0.3) !important;
+}
+body .btn-primary:active {
+  transform: translateY(7px) !important;
+  box-shadow: 0 0 0 var(--gold-dark), 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Secondary (Emerald Outline) */
+body .btn-glass {
+  background: var(--cream) !important;
+  border: 4px solid var(--emerald) !important;
+  border-radius: 22px !important;
+  color: var(--emerald) !important;
+  box-shadow:
+    0 7px 0 var(--emerald-dark),
+    0 10px 18px rgba(7, 59, 48, 0.1) !important;
+  font-weight: 800 !important;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.12s ease !important;
+}
+body .btn-glass:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 9px 0 var(--emerald-dark),
+    0 14px 22px rgba(7, 59, 48, 0.14) !important;
+}
+body .btn-glass:active {
+  transform: translateY(7px) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+
+/* Back Button */
+body .back-btn {
+  background: var(--cream) !important;
+  color: var(--emerald) !important;
+  border: 3.5px solid var(--emerald) !important;
+  box-shadow: 0 5px 0 var(--emerald-dark), 0 7px 12px rgba(7, 59, 48, 0.1) !important;
+  border-radius: 50% !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+body .back-btn:active {
+  transform: translateY(5px) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+
+
+/* ==================================================
+    SCORE DISPLAY
+   ================================================== */
+body .score-display {
+  background: var(--cream) !important;
+  border: 3.5px solid var(--emerald) !important;
+  color: var(--emerald) !important;
+  box-shadow: 0 5px 0 var(--emerald-dark) !important;
+  border-radius: 20px !important;
+  font-weight: 900 !important;
+}
+body .score-display .coin-icon {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold)) !important;
+  color: #FFFFFF !important;
+  border: 2.5px solid #FFFFFF !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+}
+
+
+/* ==================================================
+   � TABS
+   ================================================== */
+body .tab {
+  color: var(--ink-soft) !important;
+  font-weight: 700 !important;
+  border-radius: 14px !important;
+  transition: all 0.2s ease !important;
+}
+body .tab.active {
+  background: linear-gradient(180deg, var(--gold-light), var(--gold)) !important;
+  color: #4A2800 !important;
+  border: 2.5px solid var(--gold-dark) !important;
+  box-shadow: 0 4px 0 var(--gold-dark) !important;
+  border-radius: 14px !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==================================================
+    TIMER & PROGRESS
+   ================================================== */
+body .timer-ring .ring-fg {
+  stroke: var(--emerald) !important;
+}
+body .progress-bar {
+  background: var(--emerald-mist) !important;
+  border: 3px solid var(--emerald) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+body .progress-bar-fill {
+  background: linear-gradient(90deg, var(--emerald-light), var(--emerald)) !important;
+  border-radius: 16px !important;
+  position: relative !important;
+}
+body .progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shineSlide 2.5s ease-in-out infinite;
+}
+
+
+/* ==================================================
+    TOASTS
+   ================================================== */
+body .toast.success {
+  background: linear-gradient(135deg, var(--success), var(--success-dark)) !important;
+  border: 3.5px solid #FFFFFF !important;
+  border-radius: 22px !important;
+  box-shadow: 0 6px 0 var(--success-dark), 0 10px 20px rgba(45, 198, 83, 0.3) !important;
+  color: #FFFFFF !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==================================================
+    BADGES & PLAYER
+   ================================================== */
+body .badge {
+  --badge-bg: var(--emerald-mist);
+  --badge-color: var(--emerald);
+  border: 2.5px solid var(--emerald) !important;
+  border-radius: 12px !important;
+}
+body .player-name-display {
+  background: linear-gradient(135deg, var(--emerald), #27AE60) !important;
+  color: #FFFFFF !important;
+  border: 3px solid #FFFFFF !important;
+  box-shadow: 0 4px 0 var(--emerald-dark) !important;
+  border-radius: 16px !important;
+  font-weight: 900 !important;
+}
+body .user-settings-btn {
+  background: var(--cream) !important;
+  border: 3.5px solid var(--emerald) !important;
+  box-shadow: 0 5px 0 var(--emerald-dark) !important;
+  border-radius: 18px !important;
+  color: var(--emerald) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+body .user-settings-btn:active {
+  transform: translateY(5px) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+
+#user-settings-header {
+  background: linear-gradient(135deg, var(--emerald-mist), rgba(255, 224, 130, 0.2)) !important;
+}
+
+
+/* ==================================================
+    MENU GAME CARDS — Custom Cards Style
+   ================================================== */
+body .menu-bottom-btn {
+  background: var(--cream) !important;
+  border: 4px solid var(--emerald) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 7px 0 var(--emerald-dark), 0 10px 18px rgba(7, 59, 48, 0.08) !important;
+  color: var(--emerald) !important;
+  font-weight: 900 !important;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.12s ease !important;
+}
+body .menu-bottom-btn:active {
+  transform: translateY(7px) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+body .menu-game-card {
+  background: var(--cream) !important;
+  border: 4.5px solid var(--emerald) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 8px 0 var(--emerald-dark), 0 14px 25px rgba(7, 59, 48, 0.1) !important;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.15s ease !important;
+}
+body .menu-game-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 11px 0 var(--emerald-dark), 0 18px 30px rgba(7, 59, 48, 0.13) !important;
+}
+body .menu-game-card:active {
+  transform: translateY(8px) scale(0.98) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+body .menu-game-card .card-label {
+  color: var(--emerald) !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==================================================
+    QUIZ — Question Cards & Options
+   ================================================== */
+body .quiz-cat-card {
+  background: var(--cream) !important;
+  border: 4.5px solid var(--emerald) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 8px 0 var(--emerald-dark), 0 14px 22px rgba(7, 59, 48, 0.08) !important;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.15s ease !important;
+}
+body .quiz-cat-card:hover {
+  transform: translateY(-3px) !important;
+}
+body .quiz-cat-card:active {
+  transform: translateY(8px) scale(0.98) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+body .quiz-cat-info h3 { color: var(--emerald) !important; }
+body .quiz-cat-info p  { color: var(--ink-soft) !important; }
+
+body .quiz-question-card {
+  background: var(--cream) !important;
+  border: 4.5px solid var(--emerald) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 8px 0 var(--emerald-dark), 0 14px 28px rgba(7, 59, 48, 0.08) !important;
+  color: var(--ink) !important;
+}
+
+body .quiz-option {
+  background: var(--cream) !important;
+  border: 3.5px solid var(--emerald) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 0 var(--emerald-dark), 0 8px 15px rgba(7, 59, 48, 0.05) !important;
+  color: var(--emerald) !important;
+  font-weight: 800 !important;
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.1s ease !important;
+}
+body .quiz-option:active {
+  transform: translateY(6px) !important;
+  box-shadow: 0 0 0 var(--emerald-dark) !important;
+}
+body .quiz-option.correct {
+  background: linear-gradient(135deg, var(--success), var(--success-dark)) !important;
+  border-color: var(--success-dark) !important;
+  box-shadow: 0 6px 0 var(--success-dark), 0 0 25px rgba(45, 198, 83, 0.4) !important;
+  color: #FFFFFF !important;
+}
+body .quiz-option.wrong {
+  background: linear-gradient(135deg, var(--danger), var(--danger-dark)) !important;
+  border-color: var(--danger-dark) !important;
+  box-shadow: 0 6px 0 var(--danger-dark), 0 0 20px rgba(230, 57, 70, 0.3) !important;
+  color: #FFFFFF !important;
+}
+
+
+/* ==================================================
+   � MODALS — Modals Styling
+   ================================================== */
+body .modal {
+  background: var(--cream) !important;
+  border: 4.5px solid var(--emerald) !important;
+  border-radius: 30px !important;
+  box-shadow:
+    0 10px 0 var(--emerald-dark),
+    0 20px 50px rgba(7, 59, 48, 0.2) !important;
+  color: var(--ink) !important;
+}
+body .modal-title {
+  color: var(--emerald) !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==================================================
+    INPUT FIELDS
+   ================================================== */
+body input[type="text"],
+body input[type="password"],
+body input[type="number"],
+body select {
+  border: 3px solid var(--emerald) !important;
+  border-radius: 16px !important;
+  background: #FFFFFF !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 2px 4px rgba(7, 59, 48, 0.06) !important;
+  font-weight: 700 !important;
+}
+body input:focus,
+body select:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 4px var(--gold-glow), inset 0 2px 4px rgba(7, 59, 48, 0.06) !important;
+  outline: none !important;
+}
+
+
+/* ==================================================
+    POWERUP INVENTORY BAR
+   ================================================== */
+body.ramadan .powerup-inventory {
+  background: rgba(45, 30, 80, 0.95) !important;
+  border: 3px solid #FFD700 !important;
+  box-shadow: 0 8px 0 #B8860B, 0 12px 24px rgba(0, 0, 0, 0.25) !important;
+}
+body.ramadan .powerup-slot {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(255, 215, 0, 0.2) !important;
+}
+body.ramadan .powerup-slot .slot-name { color: #FFD700 !important; }
+body.ramadan .powerup-inventory .inv-label { color: #FFD700 !important; }
+
+body.normal .powerup-inventory {
+  background: linear-gradient(135deg, rgba(11, 110, 79, 0.95), rgba(7, 59, 48, 0.95)) !important;
+  border: 4px solid var(--gold) !important;
+  box-shadow: 0 7px 0 var(--gold-dark), 0 12px 28px rgba(7, 59, 48, 0.25) !important;
+  border-radius: 22px !important;
+}
+body.normal .powerup-slot {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15) !important;
+}
+body.normal .powerup-slot:hover {
+  background: rgba(244, 166, 35, 0.25) !important;
+  border-color: var(--gold) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 6px 14px rgba(244, 166, 35, 0.3) !important;
+}
+body.normal .powerup-slot:active {
+  transform: translateY(0) scale(0.95) !important;
+  box-shadow: 0 0 0 rgba(0,0,0,0.1) !important;
+}
+body.normal .powerup-slot .slot-name {
+  color: #FFFFFF !important;
+  font-weight: 900 !important;
+}
+body.normal .powerup-inventory .inv-label {
+  color: var(--gold-light) !important;
+  font-weight: 900 !important;
+}
+
+
+/* ==================================================
+    AMBIENT ANIMATIONS — Keep everything alive!
+   ================================================== */
+@keyframes shineSlide {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px var(--gold-glow); }
+  50%      { box-shadow: 0 0 20px var(--gold-glow), 0 0 40px rgba(244, 166, 35, 0.15); }
+}
+
+@keyframes borderShimmer {
+  0%   { border-color: var(--emerald); }
+  50%  { border-color: var(--gold); }
+  100% { border-color: var(--emerald); }
+}
