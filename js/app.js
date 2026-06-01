@@ -205,10 +205,10 @@ const HawdajApp = (() => {
 
             const globalButtons = document.querySelector('.global-floating-buttons');
             if (globalButtons) {
-                if (screenId === 'splash-screen' || screenId === 'admin-panel' || screenId === 'developer') {
-                    globalButtons.style.display = 'none';
-                } else {
+                if (screenId === 'main-menu') {
                     globalButtons.style.display = 'flex';
+                } else {
+                    globalButtons.style.display = 'none';
                 }
             }
 
