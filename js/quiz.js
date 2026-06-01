@@ -16,6 +16,7 @@ const QuizGame = (() => {
     let category = 'general';
     let episodeNum = null;
     let currentSpeaker = 'jadel';
+    let lastShownRoundIndex = -1;
 
     function getNextSpeaker() {
         currentSpeaker = currentSpeaker === 'azzam' ? 'jadel' : 'azzam';
@@ -92,6 +93,7 @@ const QuizGame = (() => {
         }
 
         currentIdx = 0;
+        lastShownRoundIndex = -1;
         score = 0;
         streak = 0;
         bestStreak = 0;
@@ -128,6 +130,21 @@ const QuizGame = (() => {
             return;
         }
 
+        // Round transition check (every 5 questions: index 0, 5, 10, ...)
+        const roundIndex = Math.floor(currentIdx / 5);
+        const isRoundStart = (currentIdx % 5 === 0);
+        if (isRoundStart && lastShownRoundIndex !== roundIndex) {
+            lastShownRoundIndex = roundIndex;
+            showRoundOverlay(roundIndex + 1, () => {
+                continueShowQuestion();
+            });
+            return;
+        }
+
+        continueShowQuestion();
+    }
+
+    function continueShowQuestion() {
         const existingHint = document.getElementById('persistent-hint');
         if (existingHint) existingHint.remove();
 
@@ -893,6 +910,121 @@ const QuizGame = (() => {
                 showQuestion();
             }
         );
+    }
+
+    function showRoundOverlay(roundNum, onComplete) {
+        // Play round sound
+        if (window.HawdajAudio && HawdajAudio.SFX.levelUp) {
+            HawdajAudio.SFX.levelUp();
+        }
+
+        // Create overlay element
+        const overlay = document.createElement('div');
+        overlay.id = 'round-start-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(7, 59, 48, 0.95), rgba(11, 110, 79, 0.97));
+            z-index: 10002;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                text-align: center;
+                padding: 30px;
+                border-radius: 28px;
+                border: 4px solid #F4A623;
+                background: #FFFEF7;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 60px rgba(244, 166, 35, 0.2);
+                max-width: 85vw;
+                width: 320px;
+                position: relative;
+                animation: celebCardIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.5) both;
+            ">
+                <!-- Inner dashed border for premium look -->
+                <div style="
+                    position: absolute;
+                    inset: 6px;
+                    border: 2px dashed rgba(244, 166, 35, 0.5);
+                    border-radius: 22px;
+                    pointer-events: none;
+                "></div>
+
+                <!-- Animated sparkles -->
+                <div style="font-size: 3rem; margin-bottom: 12px; animation: pulse 1.5s infinite;">🏆</div>
+
+                <h2 style="
+                    font-family: 'Lalezar', cursive;
+                    font-size: 2.8rem;
+                    color: #0B6E4F;
+                    margin: 0 0 8px 0;
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                ">الجولة ${roundNum === 1 ? 'الأولى' : roundNum === 2 ? 'الثانية' : roundNum === 3 ? 'الثالثة' : roundNum}</h2>
+                
+                <p style="
+                    font-family: 'Changa', sans-serif;
+                    font-size: 1.1rem;
+                    color: #FF8F00;
+                    margin: 0;
+                    font-weight: 700;
+                ">استعد للأسئلة! 🎯</p>
+                
+                <!-- Countdown or quick text -->
+                <div id="round-countdown" style="
+                    font-size: 3.5rem;
+                    font-weight: 900;
+                    color: #0B6E4F;
+                    margin-top: 15px;
+                    animation: pulse 1s infinite;
+                    text-shadow: 0 0 10px rgba(11, 110, 79, 0.2);
+                ">3</div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // Fade in
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+        });
+
+        // Simple countdown logic: 3 -> 2 -> 1 -> انطلق! -> Go
+        let count = 3;
+        const countdownEl = overlay.querySelector('#round-countdown');
+        const interval = setInterval(() => {
+            count--;
+            if (count === 2) {
+                countdownEl.textContent = '2';
+                if (window.HawdajAudio) HawdajAudio.SFX.tick();
+            } else if (count === 1) {
+                countdownEl.textContent = '1';
+                if (window.HawdajAudio) HawdajAudio.SFX.tick();
+            } else if (count === 0) {
+                countdownEl.textContent = 'انطلق! 🚀';
+                if (window.HawdajAudio) HawdajAudio.SFX.correct();
+                clearInterval(interval);
+                
+                // Fade out after a short pause
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.remove();
+                        onComplete();
+                    }, 500);
+                }, 800);
+            }
+        }, 800);
     }
 
     return {
