@@ -2,7 +2,7 @@
    HAWDAJ GAME — Screen-Specific Styles
    ============================================ */
 
-/* --- Splash Screen --- */
+/* ── Splash Screen ── */
 #splash-screen {
     background: transparent;
     justify-content: center;
@@ -191,7 +191,7 @@ body.normal .splash-play-btn {
     animation: twinkle 2s ease-in-out infinite;
 }
 
-/* --- Main Menu --- */
+/* ── Main Menu ── */
 #main-menu {
     background: transparent;
     position: relative;
@@ -595,7 +595,7 @@ body.normal .menu-bottom-btn {
     opacity: 0.7;
 }
 
-/* --- User Settings Button --- */
+/* ── User Settings Button ── */
 .user-settings-btn {
     display: flex;
     flex-direction: column;
@@ -631,7 +631,7 @@ body.normal .user-settings-btn:hover {
     box-shadow: 0 4px 16px rgba(0, 108, 53, 0.3);
 }
 
-/* --- Small Screen / Laptop Fixes --- */
+/* ── Small Screen / Laptop Fixes ── */
 /* When viewport height is small (e.g. laptop), scale everything down */
 @media (max-height: 700px) {
     .menu-content {
@@ -690,7 +690,7 @@ body.normal .user-settings-btn:hover {
     }
 }
 
-/* --- Quiz Category Screen --- */
+/* ── Quiz Category Screen ── */
 #store-screen {
     background: transparent;
     padding: var(--sp-lg);
@@ -903,7 +903,7 @@ body.normal .episode-card {
     border-bottom: 2px solid var(--border-color);
 }
 
-/* --- Store Screen --- */
+/* ── Store Screen ── */
 .store-card {
     background: var(--bg-card);
     border: 2px solid rgba(0, 0, 0, 0.05);
@@ -1045,7 +1045,7 @@ body.ramadan .store-card-desc {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* --- Leaderboard Screen --- */
+/* ── Leaderboard Screen ── */
 #leaderboard {
     background: transparent;
     padding: var(--sp-2xl) var(--sp-md) var(--sp-lg);
@@ -1090,7 +1090,7 @@ body.normal .lb-player-count-badge {
     border: 1px solid rgba(0, 108, 53, 0.2);
 }
 
-/* --- Tabs — Leaderboard specific (fixed height for small screens) --- */
+/* ── Tabs — Leaderboard specific (fixed height for small screens) ── */
 #lb-tabs {
     margin-bottom: 16px;
     min-height: 62px !important;
@@ -1302,7 +1302,7 @@ body.normal .lb-row {
     font-size: var(--fs-md);
 }
 
-/* --- Name Input Modal — Redesigned --- */
+/* ── Name Input Modal — Redesigned ── */
 
 /* Outer overlay tweak for name modal */
 #name-modal {
@@ -1557,7 +1557,7 @@ body.normal .lb-row {
     height: 20px !important;
 }
 
-/* --- Small screen / portrait mobile --- */
+/* ── Small screen / portrait mobile ── */
 @media (max-height: 700px), (max-width: 400px) {
     .name-modal-card {
         max-width: 280px;
@@ -1650,9 +1650,9 @@ body.normal .lb-row {
 }
 
 
-/* ==================================================
+/* ═══════════════════════════════════════
    PORTRAIT MOBILE SUPPORT  
-   ================================================== */
+   ═══════════════════════════════════════ */
 
 @media (max-width: 768px) and (orientation: portrait) {
 
@@ -1694,7 +1694,7 @@ body.normal .lb-row {
 
 
 
-    /* --- Global --- */
+    /* ── Global ── */
     .screen {
         overflow-y: auto !important;
         overflow-x: hidden !important;
@@ -1711,9 +1711,9 @@ body.normal .lb-row {
         display: none !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        SPLASH SCREEN
-       ================================================== */
+       ══════════════════════════════════════ */
     #splash-screen {
         flex-direction: column;
         justify-content: center;
@@ -1743,9 +1743,9 @@ body.normal .lb-row {
         margin-top: 24px !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        MAIN MENU — FILL THE SCREEN
-       ================================================== */
+       ══════════════════════════════════════ */
     #main-menu {
         flex-direction: column;
         justify-content: flex-start;
@@ -1777,7 +1777,7 @@ body.normal .lb-row {
         font-size: clamp(1.6rem, 6vw, 2.4rem) !important;
     }
 
-    /* --- GAME CARDS: Make them BIG --- */
+    /* ── GAME CARDS: Make them BIG ── */
     .menu-games {
         max-width: 100% !important;
         width: 100% !important;
@@ -1807,7 +1807,7 @@ body.normal .lb-row {
         font-weight: 800 !important;
     }
 
-    /* --- Daily question banner: BIGGER --- */
+    /* ── Daily question banner: BIGGER ── */
     .daily-question-banner,
     .daily-question-card {
         width: 100% !important;
@@ -1831,7 +1831,7 @@ body.normal .lb-row {
         padding: 6px 14px !important;
     }
 
-    /* --- Bottom buttons: BIGGER --- */
+    /* ── Bottom buttons: BIGGER ── */
     .menu-bottom-btns {
         width: 100% !important;
         justify-content: center !important;
@@ -1856,9 +1856,9 @@ body.normal .lb-row {
         height: 50px !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        QUIZ GAME — Full portrait layout
-       ================================================== */
+       ══════════════════════════════════════ */
     #quiz-game {
         padding: 14px 16px !important;
         padding-top: 50px !important;
@@ -1926,9 +1926,9 @@ body.normal .lb-row {
         font-size: 1.3rem !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        MAP GAME
-       ================================================== */
+       ══════════════════════════════════════ */
     #map-game {
         padding: 14px 10px !important;
         padding-top: 50px !important;
@@ -1948,9 +1948,9 @@ body.normal .lb-row {
         font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        PUZZLE GAME
-       ================================================== */
+       ══════════════════════════════════════ */
     #puzzle-select {
         padding: 50px 16px 24px !important;
     }
@@ -1978,9 +1978,9 @@ body.normal .lb-row {
         width: min(90vw, 360px) !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        QUIZ RESULTS
-       ================================================== */
+       ══════════════════════════════════════ */
     #quiz-results {
         padding: 24px 16px !important;
     }
@@ -2006,17 +2006,17 @@ body.normal .lb-row {
         font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        LEADERBOARD & STORE
-       ================================================== */
+       ══════════════════════════════════════ */
     #leaderboard-screen,
     #store-screen {
         padding: 50px 16px 30px !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        NAME MODAL
-       ================================================== */
+       ══════════════════════════════════════ */
     #name-modal {
         padding: 20px 16px !important;
         align-items: center !important;
@@ -2026,9 +2026,9 @@ body.normal .lb-row {
         max-width: 340px !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        DIALOGUE OVERLAY
-       ================================================== */
+       ══════════════════════════════════════ */
     #dialogue-overlay > div {
         height: auto !important;
         padding: 24px !important;
@@ -2050,9 +2050,9 @@ body.normal .lb-row {
         width: 30% !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        NOTIFICATION CENTER / MODALS
-       ================================================== */
+       ══════════════════════════════════════ */
     .modal-content {
         max-width: 92vw !important;
         max-height: 85vh !important;
@@ -2069,27 +2069,54 @@ body.normal .lb-row {
         border-radius: 16px !important;
     }
 
-    /* ==================================================
+    /* ══════════════════════════════════════
        BACK / NAV BUTTONS
-       ================================================== */
+       ══════════════════════════════════════ */
     .back-btn,
     .nav-back-btn {
         width: 44px !important;
         height: 44px !important;
         font-size: 1.2rem !important;
+        top: calc(12px + env(safe-area-inset-top)) !important;
+        right: calc(12px + env(safe-area-inset-right)) !important;
+    }
+
+    /* ── Global Floating Buttons & Notch handling ── */
+    .global-floating-buttons {
+        top: calc(12px + env(safe-area-inset-top)) !important;
+        left: calc(12px + env(safe-area-inset-left)) !important;
+    }
+
+    /* ── Responsive Toast Styling & Spacing ── */
+    .toast {
+        top: calc(75px + env(safe-area-inset-top)) !important;
+        white-space: normal !important;
+        width: calc(100% - 32px) !important;
+        max-width: 400px !important;
+        text-align: center !important;
+        line-height: 1.4 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ── Map Progress Bar Spacing ── */
+    .map-progress {
+        margin-top: 15px !important;
+        width: calc(100% - 24px) !important;
+        max-width: 400px !important;
+        padding: 6px 12px !important;
     }
 }
 
-/* --- Desktop/laptop: normal layout --- */
+/* ─── Desktop/laptop: normal layout ─── */
 @media (min-width: 769px) {
     .screen {
         overflow: hidden;
     }
 }
 
-/* ==================================================
-    Hawdaj Design System Overrides — Complete Screen Visual Polish
-   ================================================== */
+/* ═══════════════════════════════════════════════════════════════
+   ✨ PREMIUM HAWDAJ REDESIGN — Complete Screen Visual Polish
+   ═══════════════════════════════════════════════════════════════ */
 
 /* --- Splash Screen --- */
 body.normal #splash-screen {
@@ -2648,7 +2675,7 @@ body.normal .puzzle-mode-card[data-mode="slide"] span {
     color: #FFFFFF !important;
 }
 
-/* Apply Display Font (Lalezar) to all major screen headers and modal titles */
+/* Apply Premium Display Font (Lalezar) to all major screen headers and modal titles */
 .splash-title,
 .menu-title,
 .quiz-cat-title,
